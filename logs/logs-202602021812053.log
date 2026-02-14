@@ -1,3 +1,0 @@
-2026-02-02 12:42:05,490 | INFO | utils.sparkUtils | get_spark_session | Building Spark session with app name: fitness-analytics, use_minio: True
-2026-02-02 12:42:09,599 | INFO | utils.sparkUtils | get_spark_session | Spark session built successfully
-2026-02-02 12:42:09,599 | INFO | utils.sparkUtils | read_raw_data | Reading raw data from /Users/bhupinderjitsingh/airflwstudy/Projects/fitness-analytics-v2/data/synthetic_fitness_6_months.csv
