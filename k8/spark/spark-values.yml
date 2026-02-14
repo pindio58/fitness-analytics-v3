@@ -1,0 +1,6 @@
+controller:
+  watchNamespaces:
+    - fitness-analytics-namespace
+deps:
+  jars:
+    - local:///opt/spark/jars/postgresql-42.7.3.jar

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: fitness-analytics-airflow-pvc
+  namespace: fitness-analytics-namespace
+spec:
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: hostpath
+  accessModes:
+    - ReadWriteMany
+  volumeName: 
+    fitness-analytics-airflow-pv

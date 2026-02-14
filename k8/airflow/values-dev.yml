@@ -1,0 +1,149 @@
+postgresql:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: postgres
+    tag: 15.15
+
+dags:
+  mountPath: /opt/airflow/dags
+  
+  persistence:
+    annotations: {}
+    enabled: true
+    existingClaim: fitness-analytics-airflow-pvc
+  
+  gitSync:
+    enabled: false
+
+# extraVolumes:
+#   - name: fitness-analytics-extravolume
+#     hostPath:
+#       path: /Users/bhupinderjitsingh/airflwstudy/Projects/fitness-analytics-v2/
+#       type: Directory
+  
+# extraVolumeMounts:
+#   - name: fitness-analytics-extravolume
+#     mountPath: /opt/airflow/project
+
+webserver:
+  env:
+    - name: BUCKET_NAME
+      valueFrom:
+        configMapKeyRef:
+          name: fitness-analytics-minio-configmap
+          key: BUCKET_NAME
+
+    - name: MINIO_ENDPOINT
+      valueFrom:
+        configMapKeyRef:
+          name: fitness-analytics-minio-configmap
+          key: MINIO_ENDPOINT
+    
+    - name: PYTHONPATH
+      value: /opt/airflow:/opt/airflow/project
+
+  extraVolumes:
+    - name: fitness-analytics-extravolume
+      hostPath:
+        path: /Users/bhupinderjitsingh/airflwstudy/Projects/fitness-analytics-v2/
+        type: Directory
+    
+  extraVolumeMounts:
+    - name: fitness-analytics-extravolume
+      mountPath: /opt/airflow/project
+
+scheduler:
+  env:
+    - name: BUCKET_NAME
+      valueFrom:
+        configMapKeyRef:
+          name: fitness-analytics-minio-configmap
+          key: BUCKET_NAME
+
+    - name: MINIO_ENDPOINT
+      valueFrom:
+        configMapKeyRef:
+          name: fitness-analytics-minio-configmap
+          key: MINIO_ENDPOINT
+    
+    - name: PYTHONPATH
+      value: /opt/airflow:/opt/airflow/project
+
+  extraVolumes:
+    - name: fitness-analytics-extravolume
+      hostPath:
+        path: /Users/bhupinderjitsingh/airflwstudy/Projects/fitness-analytics-v2/
+        type: Directory
+    
+  extraVolumeMounts:
+    - name: fitness-analytics-extravolume
+      mountPath: /opt/airflow/project
+
+apiServer:
+  env:
+    - name: BUCKET_NAME
+      valueFrom:
+        configMapKeyRef:
+          name: fitness-analytics-minio-configmap
+          key: BUCKET_NAME
+
+    - name: MINIO_ENDPOINT
+      valueFrom:
+        configMapKeyRef:
+          name: fitness-analytics-minio-configmap
+          key: MINIO_ENDPOINT
+
+    - name: PYTHONPATH
+      value: /opt/airflow:/opt/airflow/project
+      
+  extraVolumes:
+    - name: fitness-analytics-extravolume
+      hostPath:
+        path: /Users/bhupinderjitsingh/airflwstudy/Projects/fitness-analytics-v2/
+        type: Directory
+    
+  extraVolumeMounts:
+    - name: fitness-analytics-extravolume
+      mountPath: /opt/airflow/project
+
+
+workers:
+  env:
+    - name: BUCKET_NAME
+      valueFrom:
+        configMapKeyRef:
+          name: fitness-analytics-minio-configmap
+          key: BUCKET_NAME
+
+    - name: MINIO_ENDPOINT
+      valueFrom:
+        configMapKeyRef:
+          name: fitness-analytics-minio-configmap
+          key: MINIO_ENDPOINT
+
+    - name: PYTHONPATH
+      value: /opt/airflow:/opt/airflow/project
+      
+  extraVolumes:
+    - name: fitness-analytics-extravolume
+      hostPath:
+        path: /Users/bhupinderjitsingh/airflwstudy/Projects/fitness-analytics-v2/
+        type: Directory
+    
+  extraVolumeMounts:
+    - name: fitness-analytics-extravolume
+      mountPath: /opt/airflow/project
+
+  
+#  for following, please refer https://www.notion.so/Could-not-read-served-logs-Invalid-URL-http-8793-log-dag_id-No-host-supplied-2d5e0b22664f80598880f22e3a0e2474?v=2c2e0b22664f8095acf9000cdc510362&source=copy_link 
+webserverSecretKeySecretName: fitness-analytics-airflow-secret
+config:
+  # webserver:
+  #   secret_key: "2d17927e71c1f683bdd0f6780bc442b1"
+  core:
+    hostname_callable: airflow.utils.net.get_host_ip_address
+  logging:
+    hostname_callable: airflow.utils.net.get_host_ip_address
+  api:
+    hostname_callable: airflow.utils.net.get_host_ip_address

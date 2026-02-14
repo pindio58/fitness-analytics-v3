@@ -1,0 +1,4 @@
+2026-02-13 14:58:57,826 | INFO | utils.sparkUtils | get_spark_session | Building Spark session with app name: fitness-analytics, use_minio: True
+2026-02-13 14:59:01,681 | INFO | utils.sparkUtils | get_spark_session | Spark session built successfully
+2026-02-13 14:59:01,682 | INFO | utils.sparkUtils | read_data | Reading raw data from s3a://fitness-analytics/cleaned/derived/
+2026-02-13 14:59:04,819 | INFO | utils.sparkUtils | read_data | Data read successfully — 166 rows, 24 columns

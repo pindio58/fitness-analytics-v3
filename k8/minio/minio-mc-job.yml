@@ -1,0 +1,95 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fitness-analytics-minio-mc-job
+  namespace: fitness-analytics-namespace
+
+spec:
+  backoffLimit: 3
+  # selector:
+  #   matchLabels:
+  #     app: minio-mc
+  
+  template:
+    metadata:
+      labels:
+        app: minio-mc
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: minio-mc
+          image: minio/mc
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              set -e
+              echo "Waiting for MinIO to be ready..."
+              mc alias rm local || true
+              
+              # retry loop
+              for i in $(seq 1 60); do
+                if mc alias set local "$MINIO_ENDPOINT" "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD"; then
+                  echo "Connected to MinIO!"
+                  break
+                fi
+                echo "Retry $i: MinIO not ready, sleeping..."
+                sleep 2
+              done
+              
+              # Fail if MinIO not reachable
+              mc admin info local || (echo "Cannot connect to MinIO, exiting" && exit 1)
+              
+              # Create user
+              mc admin user add local "$NEWUSERNAME" "$NEWPASSWORD" || echo "User may already exist"
+              mc admin policy attach local readwrite -u "$NEWUSERNAME"
+              
+              # Create bucket
+              mc mb --ignore-existing "local/${BUCKET_NAME}"
+
+              # Create folder structure (prefixes) -- (FYI, read mc pipe)
+              echo "" | mc pipe "local/${BUCKET_NAME}/raw/.keep"
+              echo "" | mc pipe "local/${BUCKET_NAME}/cleaned/.keep"
+              echo "" | mc pipe "local/${BUCKET_NAME}/curated/.keep"
+              echo "" | mc pipe "local/${BUCKET_NAME}/logs/.keep"
+              echo "" | mc pipe "local/${BUCKET_NAME}/errors/.keep"
+
+              echo "MinIO setup completed"
+              exit 0
+
+          
+          env:
+            - name: MINIO_ROOT_USER
+              valueFrom:
+                secretKeyRef:
+                  key: MINIO_ROOT_USER
+                  name: fitness-analytics-minio-secrets
+            
+            - name: MINIO_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MINIO_ROOT_PASSWORD
+                  name: fitness-analytics-minio-secrets
+
+            - name: NEWUSERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: NEWUSERNAME
+                  name: fitness-analytics-minio-secrets
+
+            - name: NEWPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: NEWPASSWORD
+                  name: fitness-analytics-minio-secrets
+
+            - name: BUCKET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: BUCKET_NAME
+                  name: fitness-analytics-minio-configmap
+
+            - name: MINIO_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  key: MINIO_ENDPOINT
+                  name: fitness-analytics-minio-configmap           

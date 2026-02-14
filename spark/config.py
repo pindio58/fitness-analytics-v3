@@ -1,0 +1,5 @@
+BUCKET_NAME= 'fitness-analytics'
+MINIO_ENDPOINT= 'http://fitness-analytics-minio-statefulset-0.fitness-analytics-minio-service:9000'
+MINIO_ROOT_USER= 'postgresadmin'
+MINIO_ROOT_PASSWORD= 'admin123'
+appname='fitness-analytics'

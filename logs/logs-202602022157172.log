@@ -1,0 +1,8 @@
+2026-02-02 16:27:17,406 | INFO | utils.sparkUtils | get_spark_session | Building Spark session with app name: fitness-analytics, use_minio: True
+2026-02-02 16:27:21,483 | INFO | utils.sparkUtils | get_spark_session | Spark session built successfully
+2026-02-02 16:27:21,485 | INFO | utils.sparkUtils | read_raw_data | Reading raw data from /opt/project/data/synthetic_fitness_6_months.csv
+2026-02-02 16:27:23,279 | INFO | utils.sparkUtils | read_raw_data | Data read successfully — 183 rows, 14 columns
+2026-02-02 16:27:23,957 | INFO | utils.sparkUtils | write_data | Writing data to MinIO with folder name: s3a://fitness-analytics/errors/error_3
+2026-02-02 16:27:25,556 | INFO | utils.sparkUtils | write_data | Data written to s3a://fitness-analytics/errors/error_3
+2026-02-02 16:27:25,747 | INFO | utils.sparkUtils | write_data | Writing data to MinIO with folder name: s3a://fitness-analytics/cleaned/final
+2026-02-02 16:27:25,995 | INFO | utils.sparkUtils | write_data | Data written to s3a://fitness-analytics/cleaned/final

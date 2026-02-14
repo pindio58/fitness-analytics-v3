@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: fitness-analytics-airflow-pv
+  namespace: fitness-analytics-namespace
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: hostpath
+  hostPath:
+    path: /Users/bhupinderjitsingh/airflwstudy/Projects/fitness-analytics-v2/airflow/dags

@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+
+metadata:
+  name: fitness-analytics-minio-statefulset
+  namespace: fitness-analytics-namespace
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  serviceName: fitness-analytics-minio-service
+  
+  template:
+    metadata:
+      labels:
+        app: minio
+    
+    spec:
+      containers:
+      - name: minio
+        image: quay.io/minio/minio
+        args:
+          - server
+          - /data
+          - --console-address=:9001
+
+        ports:
+          - name: s3
+            containerPort: 9000
+          - name: console
+            containerPort: 9001
+        
+        env:
+          - name: MINIO_ROOT_USER
+            valueFrom:
+              secretKeyRef:
+                key: MINIO_ROOT_USER
+                name: fitness-analytics-minio-secrets
+          
+          - name: MINIO_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MINIO_ROOT_PASSWORD
+                name: fitness-analytics-minio-secrets
+        
+        volumeMounts:
+          - name: miniodata
+            mountPath: /data
+            
+      
+  volumeClaimTemplates:
+    - metadata:
+        name: miniodata
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: hostpath
+        resources:
+          requests:
+            storage: 5Gi

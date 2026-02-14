@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fitness-analytics-postgres-service
+  namespace: fitness-analytics-namespace
+spec:
+  selector:
+    app: postgres
+  ports:
+  - port: 5432
+    targetPort: 5432
+  clusterIP: None  # this is set as None so that we do not have IPs name for services
+
+# fitness-analytics-postgres-statefulset-0.fitness-analytics-postgres-service.fitness-analytics-namespace.svc.cluster.local
+
+
+# Use that in Airflow, PySpark, etc:
+#   jdbc:postgresql://fitness-analytics-postgres-service:5432/<db>
+# If connecting from a different namespace, then you must include namespace::
+#   jdbc:postgresql://fitness-analytics-postgres-service.fitness-analytics-postgres-namespace:5432/<db>
+
+# Full DNS Name inside a cluster:
+#   <statefulset-pod-name>-<ordinal>.<service>.<namespace>.svc.cluster.local. # in case mutliple instances
+#   fitness-analytics-postgres-service.fitness-analytics-postgres-namespace.svc.cluster.local
+# But can be used:
+#   fitness-analytics-postgres-service
+# fitness-analytics-postgres-statefulset-0.fitness-analytics-postgres-service.fitness-analytics-namespace.svc.cluster.local
