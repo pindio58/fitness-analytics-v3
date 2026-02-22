@@ -7,11 +7,11 @@ spec:
   type: Python
   mode: cluster
 
-  image: pindio58/fitness-spark-image:5.3
-  imagePullPolicy: IfNotPresent
+  image: pindio58/fitness-spark-image:6.0
+  imagePullPolicy: Always #IfNotPresent
 
 
-  mainApplicationFile: local:///opt/project/spark/jobs/cleaning.py
+  mainApplicationFile: local:///opt/spark/jobs/cleaning.py
   # mainApplicationFile: s3a://fitness-analytics/jobs/test.py
   sparkVersion: "4.0.0"
 
@@ -21,21 +21,13 @@ spec:
     "spark.kubernetes.driver.deleteOnTermination": "true"
     "spark.kubernetes.executor.deleteOnTermination": "true"
     "spark.hadoop.fs.s3a.aws.credentials.provider": "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider"
-    "spark.hadoop.fs.s3a.endpoint": "http://fitness-analytics-minio-service:9000"
+    "spark.hadoop.fs.s3a.endpoint": "$(MINIO_ENDPOINT)"
     "spark.hadoop.fs.s3a.path.style.access": "true"
     "spark.hadoop.fs.s3a.impl": "org.apache.hadoop.fs.s3a.S3AFileSystem"
     "spark.hadoop.fs.s3a.connection.ssl.enabled": "false"
-    "spark.hadoop.fs.s3a.access.key": "postgresadmin"
-    "spark.hadoop.fs.s3a.secret.key": "admin123"
+    "spark.hadoop.fs.s3a.access.key": "$(MINIO_ROOT_USER)"
+    "spark.hadoop.fs.s3a.secret.key": "$(MINIO_ROOT_PASSWORD)"
 
-
-  # new
-    # Mount ConfigMap with Python scripts
-  volumes:
-    - name: project-code
-      hostPath:
-        path: /Users/bhupinderjitsingh/airflwstudy/Projects/fitness-analytics-v2  # create this ConfigMap with your Python file
-        type: Directory
 
 
   driver:
@@ -45,12 +37,8 @@ spec:
     envFrom:
       - configMapRef:
           name: fitness-analytics-minio-configmap
-    env:
-      - name: PYTHONPATH
-        value: /opt/project
-    volumeMounts:
-      - name: project-code
-        mountPath: /opt/project
+      - secretRef:
+          name: fitness-analytics-minio-secrets
 
 
   executor:
@@ -61,15 +49,8 @@ spec:
     envFrom:
       - configMapRef:
           name: fitness-analytics-minio-configmap
-    env:
-      - name: PYTHONPATH
-        value: /opt/project
-    volumeMounts:
-      - name: project-code
-        mountPath: /opt/project
-
+      - secretRef:
+          name: fitness-analytics-minio-secrets
+    
   restartPolicy:
     type: Never
-
-
-  
