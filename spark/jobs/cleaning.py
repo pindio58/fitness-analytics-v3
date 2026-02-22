@@ -6,7 +6,7 @@ if str(BASE_DIR) not in sys.path:
     sys.path.append(str(BASE_DIR))
 
 # local imports
-from utils.sparkUtils import get_spark_session, get_logger, read_raw_data, write_data
+from utils.sparkUtils import get_spark_session, get_logger, read_data, write_data
 from config import BUCKET_NAME, appname
 
 #spark imports
@@ -216,7 +216,7 @@ def derive_columns(df:DataFrame)-> DataFrame:
 # ======================
 
 def main(spark: SparkSession, post_check_folder='post_check', derived_data='derived'):
-    df = read_raw_data(spark=spark, source_file=filepath, schema=schema)    
+    df = read_data(spark=spark, source_file=filepath, schema=schema)    
     checks = {
         1:check_1,
         2:check_2,
