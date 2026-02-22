@@ -7,7 +7,7 @@ from datetime import datetime
 import os,sys
 from pathlib import Path
 
-BASE_DIR = os.environ['AIRFLOW_HOME']
+BASE_DIR = Path(os.environ['AIRFLOW_HOME'])
 
 from utils.commonUtils import get_logger, upload_file_to_minio
 
