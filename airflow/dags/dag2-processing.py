@@ -7,21 +7,20 @@ from datetime import datetime
 import os,sys
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-# if str(BASE_DIR) not in sys.path:
-#     sys.path.append(str(BASE_DIR))
+BASE_DIR = Path(__file__).resolve().parents[2]
 
 from utils.commonUtils import get_logger, upload_file_to_minio
 
 
 data_dir = BASE_DIR / "project" / "data" 
-filename = data_dir / "synthetic_fitness_6_months.csv"
+filename = str(data_dir / "synthetic_fitness_6_months.csv")
 
 #============================================ define tasks ============================================
 
 
 @task
 def file_upload(filename, prefix='raw'):
+    filename= Path(filename)
     bucket_name=os.environ['BUCKET_NAME']
     key = f"{prefix.rstrip('/')}/{filename.name}" # filename.name keeps only filename; prefix.rstrip('/') avoids raw//file.csv 
     upload_file_to_minio(aws_conn_id='minio_default',
