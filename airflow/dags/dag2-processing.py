@@ -15,7 +15,7 @@ from utils.commonUtils import get_logger, upload_file_to_minio
 
 
 data_dir = BASE_DIR / "project" / "data" 
-filename = str(data_dir / "synthetic_fitness_6_months.csv")
+filename = data_dir / "synthetic_fitness_6_months.csv"
 
 #============================================ define tasks ============================================
 
