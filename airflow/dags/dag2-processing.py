@@ -7,12 +7,12 @@ from datetime import datetime
 import os,sys
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parents[2]
+BASE_DIR = os.environ['AIRFLOW_HOME']
 
 from utils.commonUtils import get_logger, upload_file_to_minio
 
 
-data_dir = BASE_DIR / "project" / "data" 
+data_dir = BASE_DIR / "data" 
 filename = str(data_dir / "synthetic_fitness_6_months.csv")
 
 #============================================ define tasks ============================================
