@@ -5,6 +5,6 @@ __pycache__/
 airflow/backup_dags
 data
 logs
-k8/airflow/values-dev-copy.yml
-k8/airflow/default-values.yml
-k8/airflow/default-values-not-all.yml
+k8/airflow/optional/values-dev-copy.yml
+k8/airflow/optional/default-values.yml
+k8/airflow/optional/default-values-not-all.yml

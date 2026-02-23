@@ -7,7 +7,7 @@ from datetime import datetime
 import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(os.environ['AIRFLOW_HOME'])
 
 from utils.commonUtils import get_logger
 

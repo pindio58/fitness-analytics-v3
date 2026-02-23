@@ -11,7 +11,7 @@ spec:
   imagePullPolicy: IfNotPresent
 
 
-  mainApplicationFile: local:///opt/project/spark/jobs/data_insertion.py
+  mainApplicationFile: local:///opt/spark/jobs/data_insertion.py
   sparkVersion: "4.0.0"
 
   sparkConf:
