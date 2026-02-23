@@ -7,7 +7,7 @@ spec:
   type: Python
   mode: cluster
 
-  image: pindio58/fitness-spark-image:5.3
+  image: pindio58/fitness-spark-image:6.1
   imagePullPolicy: IfNotPresent
 
 
@@ -21,22 +21,12 @@ spec:
     "spark.kubernetes.driver.deleteOnTermination": "true"
     "spark.kubernetes.executor.deleteOnTermination": "true"
     "spark.hadoop.fs.s3a.aws.credentials.provider": "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider"
-    "spark.hadoop.fs.s3a.endpoint": "http://fitness-analytics-minio-service:9000"
+    "spark.hadoop.fs.s3a.endpoint": "$(MINIO_ENDPOINT)"
     "spark.hadoop.fs.s3a.path.style.access": "true"
     "spark.hadoop.fs.s3a.impl": "org.apache.hadoop.fs.s3a.S3AFileSystem"
     "spark.hadoop.fs.s3a.connection.ssl.enabled": "false"
-    "spark.hadoop.fs.s3a.access.key": "postgresadmin"
-    "spark.hadoop.fs.s3a.secret.key": "admin123"
-
-
-  # new
-    # Mount ConfigMap with Python scripts
-  volumes:
-    - name: project-code
-      hostPath:
-        path: /Users/bhupinderjitsingh/airflwstudy/Projects/fitness-analytics-v2  # create this ConfigMap with your Python file
-        type: Directory
-
+    "spark.hadoop.fs.s3a.access.key": "$(MINIO_ROOT_USER)"
+    "spark.hadoop.fs.s3a.secret.key": "$(MINIO_ROOT_PASSWORD)"
 
   driver:
     cores: 1
@@ -47,13 +37,8 @@ spec:
           name: fitness-analytics-minio-configmap
       - secretRef:
           name: fitness-analytics-postgres-secrets
-    env:
-      - name: PYTHONPATH
-        value: /opt/project
-    volumeMounts:
-      - name: project-code
-        mountPath: /opt/project
-
+      - secretRef:
+          name: fitness-analytics-minio-secrets
 
   executor:
     cores: 1
@@ -65,16 +50,7 @@ spec:
           name: fitness-analytics-minio-configmap
       - secretRef:
           name: fitness-analytics-postgres-secrets
-    env:
-      - name: PYTHONPATH
-        value: /opt/project
-      
-    volumeMounts:
-      - name: project-code
-        mountPath: /opt/project
-
+      - secretRef:
+          name: fitness-analytics-minio-secrets
   restartPolicy:
     type: Never
-
-
-  
