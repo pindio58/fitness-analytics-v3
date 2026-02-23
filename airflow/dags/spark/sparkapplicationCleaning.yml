@@ -7,7 +7,7 @@ spec:
   type: Python
   mode: cluster
 
-  image: pindio58/fitness-spark-image:8.0
+  image: pindio58/fitness-spark-image:8.1
   imagePullPolicy: Always #IfNotPresent
 
 
