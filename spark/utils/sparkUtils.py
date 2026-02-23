@@ -38,6 +38,19 @@ def get_spark_session(appname, use_minio=False):
     logger.info("Spark session built successfully")
     return spark
 
+def read_raw_data(spark:SparkSession, source_file:Path, schema=None):
+    """Read raw CSV data."""
+    logger = get_logger(__name__)
+    path = str(source_file)
+    logger.info(f"Reading raw data from {path}")
+    df = (
+        spark.read.format("csv")
+        .schema(schema)
+        .option("header", True)
+        .load(path)
+    )
+    logger.info(f"Data read successfully — {df.count()} rows, {len(df.columns)} columns")
+    return df
 
 
 def read_data(spark:SparkSession, bucket_name, folder, min_folder)-> DataFrame:

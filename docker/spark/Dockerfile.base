@@ -1,0 +1,30 @@
+FROM apache/spark:4.0.0
+
+LABEL Author="Bhupinderjit Singh" \
+      version="6.0" \
+      Description="Docker image that will be used for buidling for fitness analytics project" \
+      project="Data Engineering Project"
+
+USER root
+
+ENV SPARK_HOME=/opt/spark
+ENV PATH=$SPARK_HOME/bin:$SPARK_HOME/sbin:/usr/local/bin:$PATH
+ENV PYTHONPATH=${SPARK_HOME}
+
+
+ARG HADOOP_VERSION=3.4.1
+ARG AWS_SDK_VERSION=2.24.6
+ENV HADOOP_VERSION=${HADOOP_VERSION}
+ENV PYTHONPATH="/opt/spark"
+
+WORKDIR ${SPARK_HOME}/jars
+
+# added third wget as part of https://www.notion.so/Integrate-Spark-and-Postgres-2d3e0b22664f80e9a14ce7dd9c79d16b?v=2c2e0b22664f8095acf9000cdc510362&source=copy_link
+RUN wget -q https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/${HADOOP_VERSION}/hadoop-aws-${HADOOP_VERSION}.jar && \
+    wget -q https://repo1.maven.org/maven2/software/amazon/awssdk/bundle/${AWS_SDK_VERSION}/bundle-${AWS_SDK_VERSION}.jar && \
+    wget https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.3/postgresql-42.7.3.jar
+
+
+RUN pip install --no-cache-dir \
+        requests \
+        python-dotenv

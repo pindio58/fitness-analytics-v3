@@ -35,7 +35,7 @@ def get_logger(name:str):
     file_handler.setFormatter(formattter)
     console_handler.setFormatter(formattter)
 
-    logger.addHandler(file_handler)
+    # logger.addHandler(file_handler)
     # logger.addHandler(console_handler)
 
     return logger

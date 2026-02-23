@@ -7,3 +7,4 @@ metadata:
     kubernetes.io/enforce-mountable-secrets: "true"
 secrets:
   - name: fitness-analytics-postgres-secrets
+  - name: fitness-analytics-minio-secrets

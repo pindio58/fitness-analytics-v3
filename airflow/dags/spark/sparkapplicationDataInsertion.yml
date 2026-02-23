@@ -7,12 +7,11 @@ spec:
   type: Python
   mode: cluster
 
-  image: pindio58/fitness-spark-image:6.1
+  image: pindio58/fitness-spark-image:8.2
   imagePullPolicy: IfNotPresent
 
 
   mainApplicationFile: local:///opt/project/spark/jobs/data_insertion.py
-  # mainApplicationFile: s3a://fitness-analytics/jobs/test.py
   sparkVersion: "4.0.0"
 
   sparkConf:

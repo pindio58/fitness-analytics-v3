@@ -6,9 +6,6 @@ metadata:
 
 spec:
   backoffLimit: 3
-  # selector:
-  #   matchLabels:
-  #     app: minio-mc
   
   template:
     metadata:

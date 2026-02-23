@@ -12,7 +12,6 @@ spec:
 
 
   mainApplicationFile: local:///opt/spark/jobs/cleaning.py
-  # mainApplicationFile: s3a://fitness-analytics/jobs/test.py
   sparkVersion: "4.0.0"
 
   sparkConf:

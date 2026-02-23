@@ -22,7 +22,7 @@ dags:
     containerName: git-sync
     depth: 1
     subPath: airflow/dags
-    wait: 30
+    wait: 0
     
   persistence:
     enabled: false
