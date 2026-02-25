@@ -1,19 +1,16 @@
 from pathlib import Path
 
 from utils.commonUtils import get_logger
-# from shared import settings
 
 from pyspark.sql import SparkSession
 from pyspark.sql import DataFrame
-from config import  MINIO_ENDPOINT, MINIO_ROOT_PASSWORD, MINIO_ROOT_USER
+from settings import settings
 
 # ---------- Spark Session ----------
 
 def get_spark_session(appname, use_minio=False):
     logger = get_logger(__name__)
     logger.info(f"Building Spark session with app name: {appname}, use_minio: {use_minio}")
-
-    # jars = "file:///app/pysprk/workspace/jars/hadoop-aws-3.3.4.jar,file:///app/pysprk/workspace/jars/aws-java-sdk-bundle-1.12.409.jar"
 
     builder = (
         SparkSession.builder
@@ -26,9 +23,9 @@ def get_spark_session(appname, use_minio=False):
     if use_minio:
         builder = (
             builder
-            .config("spark.hadoop.fs.s3a.endpoint", MINIO_ENDPOINT)
-            .config("spark.hadoop.fs.s3a.access.key", MINIO_ROOT_USER) # change here, no admin
-            .config("spark.hadoop.fs.s3a.secret.key", MINIO_ROOT_PASSWORD) # change here, no admin
+            .config("spark.hadoop.fs.s3a.endpoint", settings.MINIO_ENDPOINT)
+            .config("spark.hadoop.fs.s3a.access.key", settings.MINIO_ROOT_USER)
+            .config("spark.hadoop.fs.s3a.secret.key", settings.MINIO_ROOT_PASSWORD) 
             .config("spark.hadoop.fs.s3a.path.style.access", "true")
             .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
             .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false")

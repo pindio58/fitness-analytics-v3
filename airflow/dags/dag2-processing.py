@@ -6,6 +6,8 @@ from airflow.providers.cncf.kubernetes.operators.spark_kubernetes import SparkKu
 from datetime import datetime
 import os,sys
 from pathlib import Path
+from settings import AIRFLOW_CONN_MINIO, AIRFLOW_CONN_SPARK
+
 
 BASE_DIR = Path(os.environ['AIRFLOW_HOME'])
 
@@ -23,7 +25,7 @@ def file_upload(filename, prefix='raw'):
     filename= Path(filename)
     bucket_name=os.environ['BUCKET_NAME']
     key = f"{prefix.rstrip('/')}/{filename.name}" # filename.name keeps only filename; prefix.rstrip('/') avoids raw//file.csv 
-    upload_file_to_minio(aws_conn_id='minio_default',
+    upload_file_to_minio(aws_conn_id=AIRFLOW_CONN_MINIO,
                          filename=filename,
                          bucket_name=bucket_name,
                          key=key)
@@ -58,7 +60,7 @@ def etl():
         do_xcom_push=False,
         namespace='fitness-analytics-namespace',
         application_file='spark/sparkapplicationCleaning.yml',
-        kubernetes_conn_id='spark_kubernetes_default',
+        kubernetes_conn_id=AIRFLOW_CONN_SPARK,
         delete_on_termination=True
     )
 

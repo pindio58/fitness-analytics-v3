@@ -8,3 +8,5 @@ logs
 k8/airflow/optional/values-dev-copy.yml
 k8/airflow/optional/default-values.yml
 k8/airflow/optional/default-values-not-all.yml
+airflow/dags/spark/sparkapplicationCleaningUsingeHelmTemplate.yml
+k8/spark/spark-valuesForHelmTemplate.yml

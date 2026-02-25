@@ -9,7 +9,7 @@ from pyspark.sql import DataFrame
 
 # local imports
 from utils.sparkUtils import get_spark_session, get_logger, read_data
-from config import BUCKET_NAME, appname
+from settings import settings
 
 
 min_folder='derived'
@@ -17,24 +17,23 @@ clean_folder='cleaned'
 
 # connection
 table_name='fitness.fact_daily_workouts'
-POSTGRES_USER = os.environ['POSTGRES_USER']
-POSTGRES_PASSWORD = os.environ['POSTGRES_PASSWORD']
-POSTGRES_DB= os.environ['POSTGRES_DB']
+
 def main(spark)-> DataFrame:
     df = read_data(
-        bucket_name=BUCKET_NAME,
+        bucket_name=settings.BUCKET_NAME,
         folder=clean_folder,
         min_folder=min_folder,
         spark=spark
     )
     # df.printSchema()
+    postgres_url = f"jdbc:postgresql://{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}"
     (
         df.write 
         .format("jdbc") 
-        .option("url", f"jdbc:postgresql://fitness-analytics-postgres-service:5432/{POSTGRES_DB}") #jdbc:postgresql://HOST:PORT/DATABASE
+        .option("url", postgres_url)
         .option("dbtable", table_name) 
-        .option("user", POSTGRES_USER) 
-        .option("password", POSTGRES_PASSWORD) 
+        .option("user", settings.POSTGRES_USER) 
+        .option("password", settings.POSTGRES_PASSWORD) 
         .mode("overwrite") 
         .save()
     )
@@ -43,6 +42,6 @@ def main(spark)-> DataFrame:
 
 
 if __name__=='__main__':
-    spark = get_spark_session(appname=appname, use_minio=True)
+    spark = get_spark_session(appname=settings.APP_NAME, use_minio=True)
     main(spark=spark)
     spark.stop()

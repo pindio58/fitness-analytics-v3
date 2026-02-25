@@ -8,7 +8,7 @@ if str(BASE_DIR) not in sys.path:
 
 # local imports
 from utils.sparkUtils import get_spark_session, get_logger, read_raw_data, write_data
-from config import BUCKET_NAME, appname
+from settings import settings
 
 #spark imports
 from pyspark.sql import functions as F
@@ -24,7 +24,7 @@ clean_folder='cleaned'
 error_folder='errors'
 
 # initialize logger
-logger = get_logger(appname)
+logger = get_logger(settings.APP_NAME)
 
 # define schema and do no use integer type as values has decimals
 schema = StructType([
@@ -44,12 +44,10 @@ schema = StructType([
     StructField('steps',DoubleType())
 ])
 
+###########################
+### data quality checks ###
+###########################
 
-# read file
-# df = read_raw_data(spark=spark, source_file=filepath, schema=schema)
-
-
-## data quality checks
 
 # check 1: total_duration_min should ≈ sum of all individual durations
 def check_1(df:DataFrame, min_folder='error_1')-> DataFrame:
@@ -76,7 +74,7 @@ def check_1(df:DataFrame, min_folder='error_1')-> DataFrame:
     has_errors = df_with_error.limit(1).count()>0
 
     if has_errors:
-        write_data(df=df_with_error,bucket_name=BUCKET_NAME,folder=error_folder,min_folder=min_folder)
+        write_data(df=df_with_error,bucket_name=settings.BUCKET_NAME,folder=error_folder,min_folder=min_folder)
 
     df = (
         df_with_total_duration.filter(
@@ -105,7 +103,7 @@ def check_2(df:DataFrame, min_folder='error_2') -> DataFrame:
 
     has_errors = df_with_error.limit(1).count()>0
     if has_errors:
-        write_data(df=df_with_error,bucket_name=BUCKET_NAME,folder=error_folder,min_folder=min_folder)
+        write_data(df=df_with_error,bucket_name=settings.BUCKET_NAME,folder=error_folder,min_folder=min_folder)
 
     df = (
         df
@@ -130,7 +128,7 @@ def check_3(df:DataFrame, min_folder='error_3')->DataFrame:
 
     has_errors = df_with_error.limit(1).count()>0
     if has_errors:
-        write_data(df=df_with_error,bucket_name=BUCKET_NAME,folder=error_folder,min_folder=min_folder)
+        write_data(df=df_with_error,bucket_name=settings.BUCKET_NAME,folder=error_folder,min_folder=min_folder)
     
     df = (
         df
@@ -155,7 +153,7 @@ def check_4(df:DataFrame, min_folder='error_4')->DataFrame:
     
     has_errors = df_with_error.limit(1).count()>0
     if has_errors:
-        write_data(df=df_with_error,bucket_name=BUCKET_NAME,folder=error_folder,min_folder=min_folder)
+        write_data(df=df_with_error,bucket_name=settings.BUCKET_NAME,folder=error_folder,min_folder=min_folder)
     
     df = (
         df.filter(~mhr_violation)
@@ -230,13 +228,13 @@ def main(spark: SparkSession, post_check_folder='post_check', derived_data='deri
     for check in checks_list:
         df = checks[check](df)
 
-    write_data(df=df,bucket_name=BUCKET_NAME,folder=clean_folder,min_folder=post_check_folder)
+    write_data(df=df,bucket_name=settings.BUCKET_NAME,folder=clean_folder,min_folder=post_check_folder)
 
     df = derive_columns(df=df)
-    write_data(df=df,bucket_name=BUCKET_NAME,folder=clean_folder,min_folder=derived_data)
+    write_data(df=df,bucket_name=settings.BUCKET_NAME,folder=clean_folder,min_folder=derived_data)
 
 
 if __name__=='__main__':
-    spark = get_spark_session(appname=appname, use_minio=True)
+    spark = get_spark_session(appname=settings.APP_NAME, use_minio=True)
     main(spark=spark)
     spark.stop()

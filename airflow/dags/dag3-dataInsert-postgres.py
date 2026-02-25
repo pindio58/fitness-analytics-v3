@@ -6,6 +6,7 @@ from airflow.providers.cncf.kubernetes.operators.spark_kubernetes import SparkKu
 from datetime import datetime
 import os
 from pathlib import Path
+from settings import AIRFLOW_CONN_SPARK
 
 BASE_DIR = Path(os.environ['AIRFLOW_HOME'])
 
@@ -37,7 +38,7 @@ def etl():
         do_xcom_push=False,
         namespace='fitness-analytics-namespace',
         application_file='spark/sparkapplicationDataInsertion.yml',
-        kubernetes_conn_id='spark_kubernetes_default',
+        kubernetes_conn_id=AIRFLOW_CONN_SPARK,
         delete_on_termination=True
     )
 

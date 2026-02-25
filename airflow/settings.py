@@ -1,0 +1,8 @@
+# airflow/settings.py
+# Centralized Airflow settings for connection names, variables, etc.
+
+# Example Airflow connection names
+AIRFLOW_CONN_POSTGRES = "postgres-conn" 
+AIRFLOW_CONN_MINIO = "minio_default"
+AIRFLOW_CONN_SPARK = "spark_kubernetes_default"
+POSTGRES_DATABASE="postgresdb"

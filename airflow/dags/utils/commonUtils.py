@@ -2,17 +2,16 @@ import logging
 from pathlib import Path
 from datetime import datetime 
 from zoneinfo import ZoneInfo
-import sys
+import sys, os
 from typing import Optional
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-if str(BASE_DIR) not in sys.path:
-    sys.path.append(str(BASE_DIR))
+BASE_DIR = Path(os.environ['AIRFLOW_HOME'])
 
 curr_time = datetime.now(ZoneInfo('Asia/Kolkata')).strftime("%Y%m%d%H%M%S%f")[:-5]
 LOG_DIR = BASE_DIR / "logs"
+LOG_DIR.mkdir(parents=True, exist_ok=True)
 LOG_FILE = LOG_DIR / f"logs-{curr_time}.log"
 
 

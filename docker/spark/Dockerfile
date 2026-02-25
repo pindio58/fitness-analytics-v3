@@ -12,3 +12,9 @@ COPY spark/jobs /opt/spark/jobs
 COPY spark/utils /opt/spark/utils
 COPY data /opt/spark/data
 COPY spark/config.py /opt/spark/config.py
+COPY spark/settings.py /opt/spark/settings.py
+
+RUN pip install --no-cache-dir \
+        requests \
+        python-dotenv \
+        pydantic
