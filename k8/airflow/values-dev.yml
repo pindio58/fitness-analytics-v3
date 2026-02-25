@@ -96,3 +96,8 @@ config:
     hostname_callable: airflow.utils.net.get_host_ip_address
   api:
     hostname_callable: airflow.utils.net.get_host_ip_address
+
+
+# https://www.notion.so/rest-db-on-every-Airflow-restart-311e0b22664f80518723fdc146fabd00?source=copy_link
+migrateDatabaseJob:
+  enabled: true
