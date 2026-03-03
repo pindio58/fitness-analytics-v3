@@ -1,5 +1,5 @@
 from pydantic import BaseSettings
-
+from pathlib import Path
 
 class Settings(BaseSettings):
     BUCKET_NAME: str = "fitness-analytics"
@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     POSTGRES_DB: str = "fitness"
     POSTGRES_HOST: str = "fitness-analytics-postgres-service"
     POSTGRES_PORT: int = 5432
+    SCHEMA_NAME: str ="fitness" 
+    TABLE_NAME: str ="fact_daily_workouts"
+    FILENAME: Path= Path("synthetic_fitness_6_months.csv")
 
     class Config:
         env_file = ".env"

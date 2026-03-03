@@ -16,7 +16,8 @@ min_folder='derived'
 clean_folder='cleaned'
 
 # connection
-table_name='fitness.fact_daily_workouts'
+# table_name='fitness.fact_daily_workouts'
+table_name = f"{settings.SCHEMA_NAME}.{settings.TABLE_NAME}"
 
 def main(spark)-> DataFrame:
     df = read_data(

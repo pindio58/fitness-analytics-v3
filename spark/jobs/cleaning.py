@@ -19,7 +19,7 @@ from pyspark.sql import SparkSession
 
 
 # filepath='/Users/bhupinderjitsingh/airflwstudy/Projects/fitness-analytics-v2/data/synthetic_fitness_6_months.csv'
-filepath= BASE_DIR / "data" / "synthetic_fitness_6_months.csv"
+filepath= BASE_DIR / "data" / settings.FILENAME
 clean_folder='cleaned'
 error_folder='errors'
 

@@ -1,2 +1,2 @@
-DROP TABLE fitness.fact_daily_workouts;
-DROP SCHEMA fitness;
+DROP TABLE {{ schema }}.{{ table }};
+DROP SCHEMA {{ schema }};

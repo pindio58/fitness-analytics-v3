@@ -1,0 +1,63 @@
+Stopping port-forwarding...
+Uninstalling Airflow and Spark Helm releases...
+release "airflow" uninstalled
+release "spark-operator" uninstalled
+Deleting all resources for MinIO, Postgres, Airflow, Spark...
+configmap "fitness-analytics-minio-configmap" deleted from fitness-analytics-namespace namespace
+job.batch "fitness-analytics-minio-mc-job" deleted from fitness-analytics-namespace namespace
+secret "fitness-analytics-minio-secrets" deleted from fitness-analytics-namespace namespace
+service "fitness-analytics-minio-service" deleted from fitness-analytics-namespace namespace
+statefulset.apps "fitness-analytics-minio-statefulset" deleted from fitness-analytics-namespace namespace
+secret "fitness-analytics-postgres-secrets" deleted from fitness-analytics-namespace namespace
+service "fitness-analytics-postgres-service" deleted from fitness-analytics-namespace namespace
+statefulset.apps "fitness-analytics-postgres-statefulset" deleted from fitness-analytics-namespace namespace
+role.rbac.authorization.k8s.io "fitness-analytics-airflow-role" deleted from fitness-analytics-namespace namespace
+rolebinding.rbac.authorization.k8s.io "fitness-analytics-airflow-rolebinding" deleted from fitness-analytics-namespace namespace
+secret "fitness-analytics-airflow-secret" deleted from fitness-analytics-namespace namespace
+configmap "fitness-analytics-spark-configmap" deleted from fitness-analytics-namespace namespace
+secret "fitness-analytics-spark-secret" deleted from fitness-analytics-namespace namespace
+serviceaccount "spark" deleted from fitness-analytics-namespace namespace
+Error from server (NotFound): error when deleting "/Users/bhupinderjitsingh/airflwstudy/Projects/fitness-analytics-v3/k8/spark/base/spark-secret.yml": secrets "fitness-analytics-spark-secret" not found
+All services stopped and resources deleted.
+Stopping port-forwarding...
+Uninstalling Airflow and Spark Helm releases...
+release "airflow" uninstalled
+release "spark-operator" uninstalled
+Deleting all resources for MinIO, Postgres, Airflow, Spark...
+configmap "fitness-analytics-minio-configmap" deleted from fitness-analytics-namespace namespace
+job.batch "fitness-analytics-minio-mc-job" deleted from fitness-analytics-namespace namespace
+secret "fitness-analytics-minio-secrets" deleted from fitness-analytics-namespace namespace
+service "fitness-analytics-minio-service" deleted from fitness-analytics-namespace namespace
+statefulset.apps "fitness-analytics-minio-statefulset" deleted from fitness-analytics-namespace namespace
+secret "fitness-analytics-postgres-secrets" deleted from fitness-analytics-namespace namespace
+service "fitness-analytics-postgres-service" deleted from fitness-analytics-namespace namespace
+statefulset.apps "fitness-analytics-postgres-statefulset" deleted from fitness-analytics-namespace namespace
+role.rbac.authorization.k8s.io "fitness-analytics-airflow-role" deleted from fitness-analytics-namespace namespace
+rolebinding.rbac.authorization.k8s.io "fitness-analytics-airflow-rolebinding" deleted from fitness-analytics-namespace namespace
+secret "fitness-analytics-airflow-secret" deleted from fitness-analytics-namespace namespace
+configmap "fitness-analytics-spark-configmap" deleted from fitness-analytics-namespace namespace
+secret "fitness-analytics-spark-secret" deleted from fitness-analytics-namespace namespace
+serviceaccount "spark" deleted from fitness-analytics-namespace namespace
+Error from server (NotFound): error when deleting "/Users/bhupinderjitsingh/airflwstudy/Projects/fitness-analytics-v3/k8/spark/base/spark-secret.yml": secrets "fitness-analytics-spark-secret" not found
+All services stopped and resources deleted.
+Stopping port-forwarding...
+Uninstalling Airflow and Spark Helm releases...
+release "airflow" uninstalled
+release "spark-operator" uninstalled
+Deleting all resources for MinIO, Postgres, Airflow, Spark...
+configmap "fitness-analytics-minio-configmap" deleted from fitness-analytics-namespace namespace
+job.batch "fitness-analytics-minio-mc-job" deleted from fitness-analytics-namespace namespace
+secret "fitness-analytics-minio-secrets" deleted from fitness-analytics-namespace namespace
+service "fitness-analytics-minio-service" deleted from fitness-analytics-namespace namespace
+statefulset.apps "fitness-analytics-minio-statefulset" deleted from fitness-analytics-namespace namespace
+secret "fitness-analytics-postgres-secrets" deleted from fitness-analytics-namespace namespace
+service "fitness-analytics-postgres-service" deleted from fitness-analytics-namespace namespace
+statefulset.apps "fitness-analytics-postgres-statefulset" deleted from fitness-analytics-namespace namespace
+role.rbac.authorization.k8s.io "fitness-analytics-airflow-role" deleted from fitness-analytics-namespace namespace
+rolebinding.rbac.authorization.k8s.io "fitness-analytics-airflow-rolebinding" deleted from fitness-analytics-namespace namespace
+secret "fitness-analytics-airflow-secret" deleted from fitness-analytics-namespace namespace
+configmap "fitness-analytics-spark-configmap" deleted from fitness-analytics-namespace namespace
+secret "fitness-analytics-spark-secret" deleted from fitness-analytics-namespace namespace
+serviceaccount "spark" deleted from fitness-analytics-namespace namespace
+Error from server (NotFound): error when deleting "/Users/bhupinderjitsingh/airflwstudy/Projects/fitness-analytics-v3/k8/spark/base/spark-secret.yml": secrets "fitness-analytics-spark-secret" not found
+All services stopped and resources deleted.

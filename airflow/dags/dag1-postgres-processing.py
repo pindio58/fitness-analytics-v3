@@ -2,7 +2,7 @@ from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 from airflow.providers.standard.operators.empty import EmptyOperator
 from airflow.sdk import dag
 from datetime import datetime
-from  settings import AIRFLOW_CONN_POSTGRES, POSTGRES_DATABASE
+from  settings import AIRFLOW_CONN_POSTGRES, POSTGRES_DATABASE, TABLE_NAME, SCHEMA_NAME
 
 @dag(
     dag_id='postgres-operation',
@@ -14,6 +14,7 @@ def etl():
     create_table_task = SQLExecuteQueryOperator(
         task_id='create-tables',
         sql='ddl/create_tables.sql',
+        parameters={'schema': SCHEMA_NAME, 'table': TABLE_NAME},
         conn_id=AIRFLOW_CONN_POSTGRES,
         database=POSTGRES_DATABASE
      )
