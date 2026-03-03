@@ -1,8 +1,15 @@
+#fro airflow imports
 from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 from airflow.providers.standard.operators.empty import EmptyOperator
 from airflow.sdk import dag
+from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOperator
+
+# import python modules
 from datetime import datetime
+
 from  settings import AIRFLOW_CONN_POSTGRES, POSTGRES_DATABASE, TABLE_NAME, SCHEMA_NAME
+
+
 
 @dag(
     dag_id='postgres-operation',
@@ -19,6 +26,11 @@ def etl():
         database=POSTGRES_DATABASE
      )
     end = EmptyOperator(task_id='end')
-    start >> create_table_task >> end
+
+    trigger_dag_2 = TriggerDagRunOperator(trigger_dag_id='fitness-analytics',
+                                          wait_for_completion=True
+                                          )
+
+    start >> create_table_task >> end >> trigger_dag_2
 
 etl()
