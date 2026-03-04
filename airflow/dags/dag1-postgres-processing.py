@@ -31,7 +31,7 @@ def etl():
     end = EmptyOperator(task_id='end')
 
     trigger_dag_2 = TriggerDagRunOperator(trigger_dag_id='fitness-analytics',
-                                          wait_for_completion=True,
+                                          wait_for_completion=False,
                                           task_id='trigger_dag2')
 
     start >> create_table_task >> end >> trigger_dag_2

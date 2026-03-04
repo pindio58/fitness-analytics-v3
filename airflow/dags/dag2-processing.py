@@ -48,7 +48,7 @@ default_args={'owner':'pindio58',
       dag_id='fitness-analytics',
       schedule=None,
       start_date=datetime(2025,12,1),
-      is_paused_upon_creation=True)
+      is_paused_upon_creation=False)
 
 def etl():
     start = EmptyOperator(task_id='start')
