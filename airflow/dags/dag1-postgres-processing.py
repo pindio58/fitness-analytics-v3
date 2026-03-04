@@ -9,7 +9,10 @@ from datetime import datetime
 
 from  settings import AIRFLOW_CONN_POSTGRES, POSTGRES_DATABASE, TABLE_NAME, SCHEMA_NAME
 
-
+############################  Notes #####################################
+## params → available to Jinja templates ({{ params.schema }})        ###
+## parameters → passed to the database driver (like %s placeholders)  ###
+#########################################################################
 
 @dag(
     dag_id='postgres-operation',
@@ -21,7 +24,7 @@ def etl():
     create_table_task = SQLExecuteQueryOperator(
         task_id='create-tables',
         sql='ddl/create_tables.sql',
-        parameters={'schema': SCHEMA_NAME, 'table': TABLE_NAME},
+        params={'schema': SCHEMA_NAME, 'table': TABLE_NAME},
         conn_id=AIRFLOW_CONN_POSTGRES,
         database=POSTGRES_DATABASE
      )
