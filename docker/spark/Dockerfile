@@ -17,4 +17,5 @@ COPY spark/settings.py /opt/spark/settings.py
 RUN pip install --no-cache-dir \
         requests \
         python-dotenv \
-        pydantic
+        pydantic \
+        pydantic-settings
