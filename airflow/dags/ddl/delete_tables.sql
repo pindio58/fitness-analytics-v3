@@ -1,2 +1,2 @@
-DROP TABLE {{ schema }}.{{ table }};
-DROP SCHEMA {{ schema }};
+DROP TABLE {{ params.schema }}.{{ params.table }};
+DROP SCHEMA {{ params.schema }};

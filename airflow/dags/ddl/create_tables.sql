@@ -1,10 +1,10 @@
 --Create Schema --
-CREATE SCHEMA IF NOT EXISTS {{ schema }};
+CREATE SCHEMA IF NOT EXISTS {{ params.schema }};
 
 
 --Create table
 
-CREATE TABLE IF NOT EXISTS {{ schema }}.{{ table }} (
+CREATE TABLE IF NOT EXISTS {{ params.schema }}.{{ params.table }} (
     date DATE NOT NULL,
     day_of_week VARCHAR(9),
     workout_type VARCHAR(50),
