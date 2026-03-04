@@ -1,6 +1,7 @@
 from airflow.sdk import task, dag
 from airflow.providers.standard.operators.empty import EmptyOperator
 from airflow.providers.cncf.kubernetes.operators.spark_kubernetes import SparkKubernetesOperator
+from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOperator
 
 
 from datetime import datetime
@@ -64,6 +65,10 @@ def etl():
         delete_on_termination=True
     )
 
-    start >> upload >> spark_test >> end
+    trigger_dag_3 = TriggerDagRunOperator(trigger_dag_id='fitness-analytics-postgres-data-insert',
+                                          wait_for_completion=False,
+                                          task_id='trigger_dag3')
+
+    start >> upload >> spark_test >> end >> trigger_dag_3
 
 etl()
