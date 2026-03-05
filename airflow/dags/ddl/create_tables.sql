@@ -2,9 +2,9 @@
 CREATE SCHEMA IF NOT EXISTS {{ params.schema }};
 
 
---Create table
+--Create table fitness
 
-CREATE TABLE IF NOT EXISTS {{ params.schema }}.{{ params.table }} (
+CREATE TABLE IF NOT EXISTS {{ params.schema }}.{{ params.fitness_table }} (
     date DATE NOT NULL,
     day_of_week VARCHAR(9),
     workout_type VARCHAR(50),
@@ -41,6 +41,17 @@ CREATE TABLE IF NOT EXISTS {{ params.schema }}.{{ params.table }} (
     PRIMARY KEY (date)
 );
 
+-- https://www.notion.so/make-another-table-for-token-storage-31ae0b22664f8022aa2add1e6fb773bf?v=2cde0b22664f8014b67e000cbb85deb6&source=copy_link
+-- create table for token store
+
+
+CREATE TABLE {{ params.schema }}.{{ params.token_table }}  (
+    athlete_id BIGINT PRIMARY KEY,
+    access_token TEXT NOT NULL,
+    refresh_token TEXT NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 -- Indexes
 
