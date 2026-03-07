@@ -20,8 +20,8 @@ default_args={'owner':'pindio58',
 
 @dag(default_args=default_args,
      catchup=False,
-     dag_display_name='fitness-analytics',
-      dag_id='fitness-analytics',
+     dag_display_name='refresh-token',
+      dag_id='refresh-token',
       schedule=None,
       start_date=datetime(2025,12,1),
       is_paused_upon_creation=False)
