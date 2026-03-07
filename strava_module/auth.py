@@ -11,7 +11,7 @@ import logging
 import os
 from datetime import datetime, timezone, timedelta
 
-from strava_module.settings import settings
+from settings import settings
 
 # -------------------------
 # Logging configuration

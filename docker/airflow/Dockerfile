@@ -9,9 +9,16 @@ COPY airflow/dags/spark /opt/airflow/spark
 COPY airflow/dags/utils /opt/airflow/utils
 COPY data /opt/airflow/data
 COPY airflow/settings.py /opt/airflow/settings.py
+COPY strava_module /opt/airflow/strava_module
+
 
 RUN chown -R airflow: /opt/airflow
 
 USER  airflow
+RUN pip install --no-cache-dir \
+        requests \
+        python-dotenv \
+        pydantic \
+        pydantic-settings
 
 ENV PYTHONPATH="/opt/airflow"
