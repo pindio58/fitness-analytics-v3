@@ -10,6 +10,7 @@ import requests
 import logging
 import os
 from datetime import datetime, timezone, timedelta
+from airflow.providers.postgres.hooks.postgres import PostgresHook
 
 from settings import settings
 
@@ -32,14 +33,15 @@ def get_connection():
     try:
         logger.info("Opening database connection")
 
-        conn = psycopg2.connect(
-            database="postgresdb",
-            user="postgresadmin",
-            password="admin123",
-            host="fitness-analytics-postgres-service",
-            port="5432",
-        )
-
+        # conn = psycopg2.connect(
+        #     database="postgresdb",
+        #     user="postgresadmin",
+        #     password="admin123",
+        #     host="fitness-analytics-postgres-service",
+        #     port="5432",
+        # )
+        hook = PostgresHook(postgres_conn_id=settings.AIRFLOW_CONN_POSTGRES)
+        conn = hook.get_conn()
         logger.info("Database connection established")
         return conn
 
