@@ -13,3 +13,5 @@ k8/spark/spark-valuesForHelmTemplate.yml
 StravaAPIDetails.yml
 fitness-analytics
 *.log
+strava_module_old
+.env

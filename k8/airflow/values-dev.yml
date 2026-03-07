@@ -10,7 +10,7 @@ images:
     # registry: docker.io
     pullPolicy: IfNotPresent
     repository: pindio58/fitness-airflow-image
-    tag: "2.4"
+    tag: "2.6"
 
 dags:
   gitSync:
@@ -27,7 +27,7 @@ dags:
   persistence:
     enabled: false
 
-envFrom:
+extraEnvFrom: |-
   - secretRef: 
       name: fitness-analytics-strava-secret
   - configMapRef:

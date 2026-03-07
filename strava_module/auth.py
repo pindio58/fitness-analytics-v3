@@ -36,8 +36,8 @@ def get_connection():
             database="postgresdb",
             user="postgresadmin",
             password="admin123",
-            host="localhost",
-            port="5433",
+            host="fitness-analytics-postgres-service",
+            port="5432",
         )
 
         logger.info("Database connection established")
