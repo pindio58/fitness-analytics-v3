@@ -30,7 +30,7 @@ def etl():
 
     refresh_token = BashOperator(
         task_id='refresh_token',
-        bash_command='python strava_module/auth.py'
+        bash_command='python /opt/airflow/dags/strava_module/auth.py'
     )
 
     end = EmptyOperator(task_id='end')
