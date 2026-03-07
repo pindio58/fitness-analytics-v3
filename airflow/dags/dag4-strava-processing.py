@@ -10,7 +10,7 @@ from datetime import datetime
 BASE_DIR = Path(os.environ['AIRFLOW_HOME'])
 file_path = BASE_DIR / "strava_module" / "auth.py"
 
-athlete_id= os.getenv['athlete_id']
+athlete_id= os.getenv('athlete_id')
 
 default_args={'owner':'pindio58',
               'depends_on_past':False,
