@@ -7,7 +7,7 @@ from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOpe
 # import python modules
 from datetime import datetime
 
-from  settings import settings
+from  settings import AIRFLOW_CONN_POSTGRES, POSTGRES_DATABASE, FITNESS_TABLE_NAME, SCHEMA_NAME, TOKEN_TABLE_NAME
 
 ############################  Notes #####################################
 ## params → available to Jinja templates ({{ params.schema }})        ###
@@ -24,9 +24,9 @@ def etl():
     create_table_task = SQLExecuteQueryOperator(
         task_id='create-tables',
         sql='ddl/create_tables.sql',
-        params={'schema': settings.SCHEMA_NAME, 'fitness_table': settings.FITNESS_TABLE_NAME, 'token_table': settings.TOKEN_TABLE_NAME},
-        conn_id=settings.AIRFLOW_CONN_POSTGRES,
-        database=settings.POSTGRES_DATABASE
+        params={'schema': SCHEMA_NAME, 'fitness_table': FITNESS_TABLE_NAME, 'token_table': TOKEN_TABLE_NAME},
+        conn_id=AIRFLOW_CONN_POSTGRES,
+        database=POSTGRES_DATABASE
      )
     end = EmptyOperator(task_id='end')
 
