@@ -7,7 +7,14 @@ from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOpe
 # import python modules
 from datetime import datetime
 
-from  settings import AIRFLOW_CONN_POSTGRES, POSTGRES_DATABASE, FITNESS_TABLE_NAME, SCHEMA_NAME, TOKEN_TABLE_NAME
+from  settings import (
+    AIRFLOW_CONN_POSTGRES, 
+    POSTGRES_DATABASE, 
+    FITNESS_TABLE_NAME, 
+    SCHEMA_NAME, 
+    TOKEN_TABLE_NAME
+)
+
 
 ############################  Notes #####################################
 ## params → available to Jinja templates ({{ params.schema }})        ###
