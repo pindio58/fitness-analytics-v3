@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     client_secret: str
     url: str = "https://www.strava.com/oauth/token"
     athlete_id: int = 12345
-    AIRFLOW_CONN_POSTGRES='postgres-conn'
+    AIRFLOW_CONN_POSTGRES: str ='postgres-conn'
 
 
     model_config = SettingsConfigDict(
