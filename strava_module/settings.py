@@ -14,6 +14,14 @@ class Settings(BaseSettings):
     athlete_id: int = 12345
     AIRFLOW_CONN_POSTGRES: str ='postgres-conn'
 
+    # for local db connection
+
+    pg_host: str="localhost"
+    pg_port:str ='5433'
+    pg_user:str
+    pg_password:str
+    pg_db:str="postgresdb"
+
 
     model_config = SettingsConfigDict(
         env_file="/Users/bhupinderjitsingh/airflwstudy/Projects/fitness-analytics-v3/strava_module/.env",
