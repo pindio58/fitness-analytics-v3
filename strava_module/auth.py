@@ -12,7 +12,7 @@ import os
 from datetime import datetime, timezone, timedelta
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 
-from settings import settings
+from strava_module.settings import settings
 
 # -------------------------
 # Logging configuration
