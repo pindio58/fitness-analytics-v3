@@ -1,14 +1,14 @@
 from airflow.providers.standard.operators.empty import EmptyOperator
-from airflow.providers.standard.operators.bash import BashOperator
-from airflow.sdk import dag, task
-
+from airflow.sdk import (
+    dag,
+    task
+)
 
 from pathlib import Path
 import os
 from datetime import datetime
 
-BASE_DIR = Path(os.environ['AIRFLOW_HOME'])
-file_path = BASE_DIR / "strava_module" / "auth.py"
+from strava_module.auth import get_valid_token
 
 athlete_id= os.getenv('athlete_id')
 
@@ -16,6 +16,11 @@ default_args={'owner':'pindio58',
               'depends_on_past':False,
               'retries':0,
               'email_on_failure':False}
+
+
+@task
+def refresh_token(athlete_id):
+    return get_valid_token(athlete_id=athlete_id)
 
 
 @dag(default_args=default_args,
@@ -27,14 +32,9 @@ default_args={'owner':'pindio58',
       is_paused_upon_creation=False)
 def etl():
     start = EmptyOperator(task_id='start')
-
-    refresh_token = BashOperator(
-        task_id='refresh_token',
-        bash_command= f'python {file_path}'
-    )
-
+    token = refresh_token(athlete_id=athlete_id)
     end = EmptyOperator(task_id='end')
 
-    start >> refresh_token >> end
+    start >> token >> end
 
 etl()
