@@ -7,7 +7,7 @@ from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOpe
 # import python modules
 from datetime import datetime
 
-from  settings import (
+from  constants import (
     AIRFLOW_CONN_POSTGRES, 
     POSTGRES_DATABASE, 
     FITNESS_TABLE_NAME, 

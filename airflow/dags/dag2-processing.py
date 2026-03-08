@@ -7,7 +7,7 @@ from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOpe
 from datetime import datetime
 import os,sys
 from pathlib import Path
-from settings import AIRFLOW_CONN_MINIO, AIRFLOW_CONN_SPARK
+from constants import AIRFLOW_CONN_MINIO, AIRFLOW_CONN_SPARK
 
 
 BASE_DIR = Path(os.environ['AIRFLOW_HOME'])
