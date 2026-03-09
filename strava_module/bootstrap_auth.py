@@ -44,7 +44,7 @@ def exchange_code_for_token(code):
     }
 
     response = requests.post(
-       settings.url,
+       settings.AUTH_URL,
         data=payload,
     )
 

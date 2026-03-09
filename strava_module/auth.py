@@ -110,7 +110,7 @@ def refresh_token(refresh_token):
 
     try:
         # logger.info(payload)
-        response = requests.post(url=settings.url, data=payload)
+        response = requests.post(url=settings.AUTH_URL, data=payload)
 
         logger.info(f"Strava API response status: {response.status_code}")
 
