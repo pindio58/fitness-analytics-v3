@@ -24,7 +24,7 @@ logging.basicConfig(
 
 logger = logging.getLogger("strava_token_manager")
 
-
+athlete_id=os.getenv('athelete_id')
 
 # -------------------------
 # DB Connection
