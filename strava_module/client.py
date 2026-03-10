@@ -1,6 +1,6 @@
 import requests
 
-from auth import get_valid_token
+from strava_module.auth import get_valid_token
 
 from strava_module.settings import settings
 
