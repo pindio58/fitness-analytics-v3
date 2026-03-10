@@ -28,7 +28,7 @@ class Settings(BaseSettings):
     
 
     model_config = SettingsConfigDict(
-        env_file="/Users/bhupinderjitsingh/airflwstudy/Projects/fitness-analytics-v3/strava_module/.env",
+        env_file=".env",
         env_file_encoding="utf-8"
     )
 

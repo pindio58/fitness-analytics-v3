@@ -6,3 +6,7 @@ metadata:
 data:
   url: https://www.strava.com/oauth/token
   athlete_id: "205688703"
+  pg_host: "localhost"
+  pg_port: "5433"
+  pg_db: "postgresdb"
+
