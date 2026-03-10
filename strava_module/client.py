@@ -2,7 +2,7 @@ import requests
 
 from auth import get_valid_token
 
-from settings import settings
+from strava_module.settings import settings
 
 class StravaClient:
 

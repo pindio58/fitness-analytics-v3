@@ -1,4 +1,4 @@
-from client import StravaClient
+from strava_module.client import StravaClient
 
 client = StravaClient()
 
