@@ -35,6 +35,6 @@ def etl():
     athlete = ingest()
     end = EmptyOperator(task_id='end')
 
-    start >> athlete_id >> end
+    start >> athlete >> end
 
 etl()
