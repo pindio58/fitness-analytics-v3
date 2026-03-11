@@ -166,7 +166,7 @@ def update_tokens(athlete_id, access_token, refresh_token, expires_at):
 # -------------------------
 # Main token manager
 # -------------------------
-def get_valid_token(athlete_id):
+def get_valid_token(athlete_id=athlete_id):
 
     logger.info("Checking token validity")
 
