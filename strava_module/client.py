@@ -33,8 +33,15 @@ class StravaClient:
         
     
     # get activities
-    def get_activities(self):
-        return self._request("GET","athlete/activites")
+    def get_activities(self, page=1):
+        params = {
+            "page":page
+        }
+        return self._request(
+            "GET",
+            "athlete/activites",
+            params=params
+        )
     
     # get activity based on given ID
     def get_activity(self, activity_id, include_all_efforts=False):
