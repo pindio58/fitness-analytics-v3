@@ -8,7 +8,6 @@ COPY airflow/dags/ddl /opt/airflow/ddl
 COPY airflow/dags/spark /opt/airflow/spark
 COPY airflow/dags/utils /opt/airflow/utils
 COPY data /opt/airflow/data
-COPY airflow/constants.py /opt/airflow/constants.py
 COPY strava_module /opt/airflow/strava_module
 
 
