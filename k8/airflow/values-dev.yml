@@ -17,7 +17,7 @@ dags:
     enabled: true
     repo: https://github.com/pindio58/fitness-analytics-v3.git
     rev: HEAD
-    branch: main
+    branch: MinioFix
     containerLifecycleHooks: {}
     containerName: git-sync
     depth: 1

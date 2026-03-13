@@ -45,7 +45,7 @@ def get_logger(name:str):
 
 def upload_file_to_minio(
     aws_conn_id: str,
-    filename: str,
+    filename: Path,
     key: str,
     bucket_name: str,
     replace: bool = True,

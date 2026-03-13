@@ -33,9 +33,10 @@ class StravaClient:
         
     
     # get activities
-    def get_activities(self, page=1):
+    def get_activities(self, page=1,per_page=200):
         params = {
-            "page":page
+            "page":page,
+            "per_page":per_page
         }
         return self._request(
             "GET",
