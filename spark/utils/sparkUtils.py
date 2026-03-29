@@ -35,13 +35,13 @@ def get_spark_session(appname, use_minio=False):
     logger.info("Spark session built successfully")
     return spark
 
-def read_raw_data(spark:SparkSession, source_file:Path, schema=None):
+def read_local_data(spark:SparkSession, source_file:Path, format='csv', schema=None):
     """Read raw CSV data."""
     logger = get_logger(__name__)
     path = str(source_file)
     logger.info(f"Reading raw data from {path}")
     df = (
-        spark.read.format("csv")
+        spark.read.format(format)
         .schema(schema)
         .option("header", True)
         .load(path)
@@ -50,22 +50,22 @@ def read_raw_data(spark:SparkSession, source_file:Path, schema=None):
     return df
 
 
-def read_data(spark:SparkSession, bucket_name, folder, min_folder)-> DataFrame:
+def read_remote_data(spark:SparkSession, bucket_name, layer, table, format='parquet')-> DataFrame:
     """Read parquet data."""
-    source_path = f"s3a://{bucket_name}/{folder}/{min_folder}/"
+    source_path = f"s3a://{bucket_name}/{layer}/{table}/"
     logger = get_logger(__name__)
     logger.info(f"Reading raw data from {source_path}")
     df = (
-        spark.read.format("parquet")
+        spark.read.format(format)
         .load(source_path)
     )
     logger.info(f"Data read successfully — {df.count()} rows, {len(df.columns)} columns")
     return df
 
-def write_data( df, bucket_name, folder, min_folder, partition_by=None):
+def write_data( df, bucket_name, layer, table, partition_by=None):
     """Write data to MinIO in Parquet format."""
     logger = get_logger(__name__)
-    target_path = f"s3a://{bucket_name}/{folder}/{min_folder}"
+    target_path = f"s3a://{bucket_name}/{layer}/{table}"
     logger.info(f"Writing data to MinIO with folder name: {target_path}")
     (
         df.write.mode("overwrite")
