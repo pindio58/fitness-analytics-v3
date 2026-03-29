@@ -15,7 +15,7 @@ from utils.defaults import (
     START_DATE, 
     IS_PAUSED_UPON_CREATION,
     PER_PAGE, 
-    PREFIX_RAW
+    PREFIX_BRONZE
 )
 
 
@@ -59,15 +59,8 @@ def main():
     start = EmptyOperator(task_id='start')
     files = fetch_files(per_page=PER_PAGE)
     uploads = upload_file.expand(filename=files,
-                                 prefix=[PREFIX_RAW])
+                                 prefix=[PREFIX_BRONZE])
     end = EmptyOperator(task_id='end')
-    
-
-
-    # trigger_dag_3 = TriggerDagRunOperator(trigger_dag_id='fitness-analytics-postgres-data-insert',
-    #                                       wait_for_completion=False,
-    #                                       task_id='trigger_dag3')
-
     start >> files >> uploads >> end
 
 main()

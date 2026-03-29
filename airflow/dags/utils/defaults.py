@@ -17,4 +17,6 @@ START_DATE = datetime(2025, 12, 1)
 IS_PAUSED_UPON_CREATION = False
 BASE_DIR = Path(os.environ['AIRFLOW_HOME'])
 PER_PAGE=200
-PREFIX_RAW="raw"
+PREFIX_BRONZE="bronze"
+PREFIX_GOLD="gold"
+PREFIX_SILVER="silver"

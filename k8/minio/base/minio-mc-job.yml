@@ -44,11 +44,11 @@ spec:
               mc mb --ignore-existing "local/${BUCKET_NAME}"
 
               # Create folder structure (prefixes) -- (FYI, read mc pipe)
-              echo "" | mc pipe "local/${BUCKET_NAME}/raw/.keep"
-              echo "" | mc pipe "local/${BUCKET_NAME}/cleaned/.keep"
-              echo "" | mc pipe "local/${BUCKET_NAME}/curated/.keep"
-              echo "" | mc pipe "local/${BUCKET_NAME}/logs/.keep"
-              echo "" | mc pipe "local/${BUCKET_NAME}/errors/.keep"
+              echo "" | mc pipe "local/${BUCKET_NAME}/bronze/.keep"
+              echo "" | mc pipe "local/${BUCKET_NAME}/silver/.keep"
+              echo "" | mc pipe "local/${BUCKET_NAME}/gold/.keep"
+              # echo "" | mc pipe "local/${BUCKET_NAME}/logs/.keep"
+              # echo "" | mc pipe "local/${BUCKET_NAME}/errors/.keep"
 
               echo "MinIO setup completed"
               exit 0

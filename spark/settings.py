@@ -8,6 +8,8 @@ class Settings(BaseSettings):
     )
     MINIO_ROOT_USER: str = "postgresadmin"
     MINIO_ROOT_PASSWORD: str = "admin123"
+    GOLD='gold'
+    SILVER='silver'
 
     # application name
     APP_NAME: str = "fitness-analytics"
