@@ -33,10 +33,10 @@ def fetch_files(per_page):
     return files
 
 @task
-def upload_file(filename, prefix):
+def upload_file(filename, layer, table):
     filename=Path(filename)
     bucket_name=os.environ['BUCKET_NAME']
-    key = f"{prefix.rstrip('/')}/{filename.name}"
+    key = f"{layer.rstrip('/')}/{table}/{filename.name}"
     upload_file_to_minio(aws_conn_id=AIRFLOW_CONN_MINIO,
                          filename=filename,
                          bucket_name=bucket_name,
@@ -59,7 +59,8 @@ def main():
     start = EmptyOperator(task_id='start')
     files = fetch_files(per_page=PER_PAGE)
     uploads = upload_file.expand(filename=files,
-                                 prefix=[PREFIX_BRONZE])
+                                 layer=[PREFIX_BRONZE],
+                                 table='activities')
     end = EmptyOperator(task_id='end')
     start >> files >> uploads >> end
 
