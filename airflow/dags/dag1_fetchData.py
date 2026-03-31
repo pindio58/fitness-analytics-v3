@@ -19,7 +19,7 @@ from utils.defaults import (
 )
 
 
-from strava_module.loader import fetch_activities_to_file
+from strava_module.loader import fetch_activities_to_file, fetch_athlete
 
 athlete_id= os.getenv('athlete_id')
 
@@ -30,6 +30,11 @@ athlete_id= os.getenv('athlete_id')
 @task
 def fetch_files(per_page):
     files=[str(filename) for filename in fetch_activities_to_file(per_page=per_page)]
+    return files
+
+@task
+def fetch_athlete_files(per_page):
+    files=[str(filename) for filename in fetch_athlete(per_page=per_page)]
     return files
 
 @task
@@ -58,10 +63,15 @@ def upload_file(filename, layer, table):
 def main():
     start = EmptyOperator(task_id='start')
     files = fetch_files(per_page=PER_PAGE)
+    athlete_files= fetch_athlete_files(per_page=PER_PAGE)
     uploads = upload_file.expand(filename=files,
                                  layer=[PREFIX_BRONZE],
                                  table=['activities'])
+    athlete_uploads = upload_file.expand(filename=athlete_files,
+                                 layer=[PREFIX_BRONZE],
+                                 table=['athlete'])
     end = EmptyOperator(task_id='end')
     start >> files >> uploads >> end
+    start >> athlete_files >> athlete_uploads >> end
 
 main()
