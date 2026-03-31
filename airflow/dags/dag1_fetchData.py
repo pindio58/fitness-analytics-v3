@@ -34,7 +34,7 @@ def fetch_files(per_page):
 
 @task
 def fetch_athlete_files(per_page):
-    files=[str(filename) for filename in fetch_athlete(per_page=per_page)]
+    files=[str(filename) for filename in fetch_athlete()]
     return files
 
 @task
