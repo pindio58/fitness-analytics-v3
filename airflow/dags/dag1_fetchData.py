@@ -33,7 +33,7 @@ def fetch_files(per_page):
     return files
 
 @task
-def fetch_athlete_files(per_page):
+def fetch_athlete_files():
     files=[str(filename) for filename in fetch_athlete()]
     return files
 
@@ -63,7 +63,7 @@ def upload_file(filename, layer, table):
 def main():
     start = EmptyOperator(task_id='start')
     files = fetch_files(per_page=PER_PAGE)
-    athlete_files= fetch_athlete_files(per_page=PER_PAGE)
+    athlete_files= fetch_athlete_files()
     uploads = upload_file.expand(filename=files,
                                  layer=[PREFIX_BRONZE],
                                  table=['activities'])
