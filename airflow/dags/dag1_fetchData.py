@@ -64,10 +64,10 @@ def main():
     start = EmptyOperator(task_id='start')
     files = fetch_files(per_page=PER_PAGE)
     athlete_files= fetch_athlete_files()
-    uploads = upload_file.expand(filename=files,
+    uploads = upload_file.override(task_id="upload_activities").expand(filename=files,
                                  layer=[PREFIX_BRONZE],
                                  table=['activities'])
-    athlete_uploads = upload_file.expand(filename=athlete_files,
+    athlete_uploads = upload_file.override(task_id="upload_athlete").expand(filename=athlete_files,
                                  layer=[PREFIX_BRONZE],
                                  table=['athlete'])
     end = EmptyOperator(task_id='end')
