@@ -60,7 +60,7 @@ def main():
     files = fetch_files(per_page=PER_PAGE)
     uploads = upload_file.expand(filename=files,
                                  layer=[PREFIX_BRONZE],
-                                 table='activities')
+                                 table=['activities'])
     end = EmptyOperator(task_id='end')
     start >> files >> uploads >> end
 
