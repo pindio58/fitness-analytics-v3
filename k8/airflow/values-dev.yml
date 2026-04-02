@@ -10,7 +10,7 @@ images:
     # registry: docker.io
     pullPolicy: IfNotPresent
     repository: pindio58/fitness-airflow-image
-    tag: "5.2"
+    tag: "5.5"
 
 dags:
   gitSync:

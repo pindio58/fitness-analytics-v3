@@ -52,7 +52,7 @@ def read_local_data(spark:SparkSession, source_file:Path, format='csv', schema=N
 
 def read_remote_data(spark:SparkSession, bucket_name, layer, table, format='parquet')-> DataFrame:
     """Read parquet data."""
-    source_path = f"s3a://{bucket_name}/{layer}/{table}/"
+    source_path = f"s3a://{bucket_name}/{layer}/{table}/" #fitness-analytics/bronze/activities_page_1.json
     logger = get_logger(__name__)
     logger.info(f"Reading raw data from {source_path}")
     df = (

@@ -10,6 +10,9 @@ class Settings(BaseSettings):
     MINIO_ROOT_PASSWORD: str = "admin123"
     GOLD='gold'
     SILVER='silver'
+    BRONZE="bronze"
+    ACTIVITIES="activities"
+    ATHLETE="athlete"
 
     # application name
     APP_NAME: str = "fitness-analytics"

@@ -51,7 +51,7 @@ class StravaClient:
         }
         return self._request(
             "GET",
-            f"activites/{activity_id}",
+            f"activities/{activity_id}",
             params=params
         )
 
