@@ -1,0 +1,55 @@
+apiVersion: sparkoperator.k8s.io/v1beta2
+kind: SparkApplication
+metadata:
+  name: fitness-analytics-spark-application
+  namespace: fitness-analytics-namespace
+spec:
+  type: Python
+  mode: cluster
+
+  image: pindio58/fitness-spark-image:8.4
+  imagePullPolicy: Always #IfNotPresent
+
+
+  mainApplicationFile: local:///opt/spark/jobs/atheleteAndActivitiesProcessing.py
+  sparkVersion: "4.0.0"
+
+  sparkConf:
+    "spark.driver.extraJavaOptions": "--enable-native-access=ALL-UNNAMED"
+    "spark.executor.extraJavaOptions": "--enable-native-access=ALL-UNNAMED"
+    "spark.kubernetes.driver.deleteOnTermination": "true"
+    "spark.kubernetes.executor.deleteOnTermination": "true"
+    "spark.hadoop.fs.s3a.aws.credentials.provider": "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider"
+    "spark.hadoop.fs.s3a.endpoint": "$(MINIO_ENDPOINT)"
+    "spark.hadoop.fs.s3a.path.style.access": "true"
+    "spark.hadoop.fs.s3a.impl": "org.apache.hadoop.fs.s3a.S3AFileSystem"
+    "spark.hadoop.fs.s3a.connection.ssl.enabled": "false"
+    "spark.hadoop.fs.s3a.access.key": "$(MINIO_ROOT_USER)"
+    "spark.hadoop.fs.s3a.secret.key": "$(MINIO_ROOT_PASSWORD)"
+
+
+
+  driver:
+    cores: 1
+    memory: "1g"
+    serviceAccount: spark
+    envFrom:
+      - configMapRef:
+          name: fitness-analytics-minio-configmap
+      - secretRef:
+          name: fitness-analytics-minio-secrets
+
+
+  executor:
+    cores: 1
+    instances: 1
+    memory: "1g"
+    serviceAccount: spark
+    envFrom:
+      - configMapRef:
+          name: fitness-analytics-minio-configmap
+      - secretRef:
+          name: fitness-analytics-minio-secrets
+    
+  restartPolicy:
+    type: Never
