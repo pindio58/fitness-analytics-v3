@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     BRONZE: str = "bronze"
     ACTIVITIES: str = "activities"
     ATHLETE: str = "athlete"
-    GEAR: str = "gear"
+    GEAR: str = "gears"
 
     # application name
     APP_NAME: str = "fitness-analytics"
