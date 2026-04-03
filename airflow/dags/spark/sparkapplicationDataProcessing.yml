@@ -7,9 +7,8 @@ spec:
   type: Python
   mode: cluster
 
-  image: pindio58/fitness-spark-image:8.9
+  image: pindio58/fitness-spark-image:9.0
   imagePullPolicy: Always #IfNotPresent
-
 
   mainApplicationFile: local:///opt/spark/jobs/atheleteAndActivitiesProcessing.py
   sparkVersion: "4.0.0"
@@ -27,8 +26,6 @@ spec:
     "spark.hadoop.fs.s3a.access.key": "$(MINIO_ROOT_USER)"
     "spark.hadoop.fs.s3a.secret.key": "$(MINIO_ROOT_PASSWORD)"
 
-
-
   driver:
     cores: 1
     memory: "1g"
@@ -38,7 +35,6 @@ spec:
           name: fitness-analytics-minio-configmap
       - secretRef:
           name: fitness-analytics-minio-secrets
-
 
   executor:
     cores: 1
@@ -50,6 +46,6 @@ spec:
           name: fitness-analytics-minio-configmap
       - secretRef:
           name: fitness-analytics-minio-secrets
-    
+
   restartPolicy:
     type: Never
