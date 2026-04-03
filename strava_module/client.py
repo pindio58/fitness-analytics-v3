@@ -54,4 +54,10 @@ class StravaClient:
             f"activities/{activity_id}",
             params=params
         )
+        
+    def get_gear(self, gear_id):
+        return self._request(
+            "GET",
+            f"gear/{gear_id}"
+        )
 

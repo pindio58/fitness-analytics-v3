@@ -29,3 +29,13 @@ def fetch_athlete(tmp_dir="/tmp"):
         json.dump(athlete, f)
 
     yield file_path
+    
+def fetch_gear(gear_id, tmp_dir="/tmp"):
+    gear = client.get_gear(gear_id=gear_id)
+
+    file_path = Path(tmp_dir) / f"gear_{gear_id}.json"
+
+    with open(file_path, "w") as f:
+        json.dump(gear, f)
+
+    yield file_path
