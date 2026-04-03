@@ -47,7 +47,7 @@ def main(spark: SparkSession):
         spark=spark,
         bucket_name=settings.BUCKET_NAME,
         layer=settings.BRONZE,
-        table=settings.ATHLETE,
+        table=settings.GEAR,
         format="json",
     )
 
