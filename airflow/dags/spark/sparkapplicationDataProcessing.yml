@@ -7,7 +7,7 @@ spec:
   type: Python
   mode: cluster
 
-  image: pindio58/fitness-spark-image:9.0
+  image: pindio58/fitness-spark-image:9.1
   imagePullPolicy: Always #IfNotPresent
 
   mainApplicationFile: local:///opt/spark/jobs/atheleteAndActivitiesProcessing.py
