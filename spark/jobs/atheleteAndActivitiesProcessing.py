@@ -46,7 +46,14 @@ def main(spark: SparkSession):
     # -----------------------------
     activities_df = (
         activities_df 
-        .withColumn("activity_id", F.col("id")) 
+        .withColumn("athlete_id", F.col("athlete.id"))
+        .withColumn("activity_id", F.col("id"))
+        .withColumn("summary_polyline", F.col("map.summary_polyline"))
+        .withColumn("start_lat", F.get(F.col("start_latlng"), 0))
+        .withColumn("start_lng", F.get(F.col("start_latlng"), 1))
+        .withColumn("end_lat", F.get(F.col("end_latlng"), 0))
+        .withColumn("end_lng", F.get(F.col("end_latlng"), 1))
+        .withColumn("has_gps", F.col("gear_id").isNotNull())
         .withColumn("start_date", F.to_timestamp("start_date")) 
         .withColumn("start_date_local", F.to_timestamp("start_date_local")) 
         .withColumn("distance_km", F.col("distance") / 1000) 
@@ -59,6 +66,7 @@ def main(spark: SparkSession):
         .withColumn("month", F.month("start_date")) 
         .withColumn("week", F.weekofyear("start_date")) 
         .withColumn("day", F.to_date("start_date"))
+        .drop("athlete", "map", "start_latlng", "end_latlng")
     )
 
     # Remove garbage
