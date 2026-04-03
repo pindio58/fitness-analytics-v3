@@ -10,14 +10,14 @@ images:
     # registry: docker.io
     pullPolicy: IfNotPresent
     repository: pindio58/fitness-airflow-image
-    tag: "5.5"
+    tag: "5.6"
 
 dags:
   gitSync:
     enabled: true
     repo: https://github.com/pindio58/fitness-analytics-v3.git
     rev: HEAD
-    branch: spark_code
+    branch: add_gears
     containerLifecycleHooks: {}
     containerName: git-sync
     depth: 1
