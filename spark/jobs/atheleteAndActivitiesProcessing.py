@@ -113,6 +113,12 @@ def main(spark: SparkSession):
         how="left"
     )
     
+    # https://www.notion.so/COLUMN_ALREADY_EXISTS-The-column-resource_state-already-exists-Choose-another-name-or-rename-the-e-337e0b22664f8002a3dbf352c436de9b?v=2cde0b22664f8014b67e000cbb85deb6&source=copy_link
+    final_df =(
+        final_df
+        .drop("resource_state")
+    )
+    
     # -----------------------------
     # 7. GOLD LAYER (Aggregations)
     # -----------------------------
