@@ -1,6 +1,7 @@
 from pydantic_settings import BaseSettings
 from pathlib import Path
 
+
 class Settings(BaseSettings):
     BUCKET_NAME: str = "fitness-analytics"
     MINIO_ENDPOINT: str = (
@@ -8,11 +9,12 @@ class Settings(BaseSettings):
     )
     MINIO_ROOT_USER: str = "postgresadmin"
     MINIO_ROOT_PASSWORD: str = "admin123"
-    GOLD: str='gold'
-    SILVER: str='silver'
-    BRONZE: str="bronze"
-    ACTIVITIES: str="activities"
-    ATHLETE: str="athlete"
+    GOLD: str = "gold"
+    SILVER: str = "silver"
+    BRONZE: str = "bronze"
+    ACTIVITIES: str = "activities"
+    ATHLETE: str = "athlete"
+    GEAR: str = "gear"
 
     # application name
     APP_NAME: str = "fitness-analytics"
@@ -23,9 +25,9 @@ class Settings(BaseSettings):
     POSTGRES_DB: str = "fitness"
     POSTGRES_HOST: str = "fitness-analytics-postgres-service"
     POSTGRES_PORT: int = 5432
-    SCHEMA_NAME: str ="fitness" 
-    TABLE_NAME: str ="fact_daily_workouts"
-    FILENAME: Path= Path("synthetic_fitness_6_months.csv")
+    SCHEMA_NAME: str = "fitness"
+    TABLE_NAME: str = "fact_daily_workouts"
+    FILENAME: Path = Path("synthetic_fitness_6_months.csv")
 
     class Config:
         env_file = ".env"
