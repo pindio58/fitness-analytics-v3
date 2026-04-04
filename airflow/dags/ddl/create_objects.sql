@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS {{ params.bronze_schema }}.{{ params.gears }}
     id TEXT PRIMARY KEY,
 
     -- common fields
-    primary BOOLEAN,
+    is_primary BOOLEAN,
     name TEXT,
     nickname TEXT,
     resource_state BIGINT,
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS {{ params.bronze_schema }}.{{ params.gears }}
     notification_distance BIGINT,
 
     -- derived (very useful)
-    gear_type TEXT
+    gear_type TEXT,
     
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
 );
