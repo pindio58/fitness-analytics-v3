@@ -2,10 +2,22 @@
 CREATE SCHEMA IF NOT EXISTS {{ params.bronze_schema }};
 CREATE SCHEMA IF NOT EXISTS {{ params.silver_schema }};
 CREATE SCHEMA IF NOT EXISTS {{ params.gold_schema }};
+CREATE SCHEMA IF NOT EXISTS {{ params.config_schema }};
+
+
+CREATE TABLE IF NOT EXISTS {{ params.config_schema }}.{{ params.token_table }} 
+( 
+    athlete_id int8 NOT NULL, 
+    access_token text NOT NULL, 
+    refresh_token text NOT NULL, 
+    expires_at int8 NOT NULL, 
+    updated_at timestamp DEFAULT CURRENT_TIMESTAMP NULL, 
+    CONSTRAINT strava_tokens_pkey PRIMARY KEY (athlete_id)
+);
 
 
 -- Create table athlete under bronze --
-CREATE TABLE IF NOT EXISTS {{ params.bronze_schema }}.{{ params.ATHLETE }}
+CREATE TABLE IF NOT EXISTS {{ params.bronze_schema }}.{{ params.athlete }}
 (
     id BIGINT PRIMARY KEY,
     badge_type_id BIGINT,
@@ -30,7 +42,7 @@ CREATE TABLE IF NOT EXISTS {{ params.bronze_schema }}.{{ params.ATHLETE }}
 );
 
 -- Create table activities under bronze --
-CREATE TABLE IF NOT EXISTS {{ params.bronze_schema }}.{{ params.ACTIVITIES }} (
+CREATE TABLE IF NOT EXISTS {{ params.bronze_schema }}.{{ params.activities }} (
     id BIGINT PRIMARY KEY,
 
     achievement_count BIGINT,
@@ -101,7 +113,7 @@ CREATE TABLE IF NOT EXISTS {{ params.bronze_schema }}.{{ params.ACTIVITIES }} (
 
 
 -- Create table gears under bronze --
-CREATE TABLE IF NOT EXISTS {{ params.bronze_schema }}.{{ params.GEARS }}
+CREATE TABLE IF NOT EXISTS {{ params.bronze_schema }}.{{ params.gears }}
 (
     id TEXT PRIMARY KEY,
 
@@ -132,7 +144,7 @@ CREATE TABLE IF NOT EXISTS {{ params.bronze_schema }}.{{ params.GEARS }}
 
 
 -- Create table activities_enriched under SILVER --
-CREATE TABLE IF NOT EXISTS {{ params.silver_schema }}.{{ params.ACTIVITIES_ENRICHED }}
+CREATE TABLE IF NOT EXISTS {{ params.silver_schema }}.{{ params.activities_enriched }}
     id BIGINT PRIMARY KEY,
     activity_id BIGINT,
 
@@ -239,7 +251,7 @@ CREATE TABLE IF NOT EXISTS {{ params.silver_schema }}.{{ params.ACTIVITIES_ENRIC
 );
 
 -- Create table daily_summary under GOLD --
-CREATE TABLE IF NOT EXISTS {{ params.gold_schema }}.{{ params.DAILY_SUMMARY }}
+CREATE TABLE IF NOT EXISTS {{ params.gold_schema }}.{{ params.daily_summary }}
 (
     day DATE PRIMARY KEY,
     num_activities BIGINT NOT NULL,
@@ -250,7 +262,7 @@ CREATE TABLE IF NOT EXISTS {{ params.gold_schema }}.{{ params.DAILY_SUMMARY }}
 );
 
 -- Create table monthly_summary under GOLD --
-CREATE TABLE IF NOT EXISTS {{ params.gold_schema }}.{{ params.MONTHLY_SUMMARY }}
+CREATE TABLE IF NOT EXISTS {{ params.gold_schema }}.{{ params.monthly_summary }}
 (
     year INT,
     month INT,
@@ -262,7 +274,7 @@ CREATE TABLE IF NOT EXISTS {{ params.gold_schema }}.{{ params.MONTHLY_SUMMARY }}
 );
 
 -- Create table type_summary under GOLD --
-CREATE TABLE IF NOT EXISTS {{ params.gold_schema }}.{{ params.TYPE_SUMMARY }}
+CREATE TABLE IF NOT EXISTS {{ params.gold_schema }}.{{ params.type_summary }}
 (
     sport_type TEXT PRIMARY KEY,
     count BIGINT NOT NULL,
@@ -271,7 +283,7 @@ CREATE TABLE IF NOT EXISTS {{ params.gold_schema }}.{{ params.TYPE_SUMMARY }}
 );
 
 -- Create table personal_records under GOLD --
-CREATE TABLE IF NOT EXISTS {{ params.gold_schema }}.{{ params.PERSONAL_RECORDS }}
+CREATE TABLE IF NOT EXISTS {{ params.gold_schema }}.{{ params.personal_records }}
 (
     id SERIAL PRIMARY KEY,
     longest_distance DOUBLE PRECISION,
@@ -280,7 +292,7 @@ CREATE TABLE IF NOT EXISTS {{ params.gold_schema }}.{{ params.PERSONAL_RECORDS }
     max_elevation DOUBLE PRECISION
 );
 
-CREATE INDEX idx_activities_athlete_id ON {{ params.bronze_schema }}.{{ params.ACTIVITIES }}(athlete_id);
-CREATE INDEX idx_activities_gear_id ON {{ params.bronze_schema }}.{{ params.ACTIVITIES }}(gear_id);
-CREATE INDEX idx_silver_day ON {{ params.silver_schema }}.{{ params.ACTIVITIES_ENRICHED }}(day);
-CREATE INDEX idx_silver_year_month ON {{ params.silver_schema }}.{{ params.ACTIVITIES_ENRICHED }}(year, month);
+CREATE INDEX idx_activities_athlete_id ON {{ params.bronze_schema }}.{{ params.activities }}(athlete_id);
+CREATE INDEX idx_activities_gear_id ON {{ params.bronze_schema }}.{{ params.activities }}(gear_id);
+CREATE INDEX idx_silver_day ON {{ params.silver_schema }}.{{ params.activities_enriched }}(day);
+CREATE INDEX idx_silver_year_month ON {{ params.silver_schema }}.{{ params.activities_enriched }}(year, month);
