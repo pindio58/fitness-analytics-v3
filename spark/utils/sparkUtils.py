@@ -61,7 +61,13 @@ def read_remote_data(
     source_path = f"s3a://{bucket_name}/{layer}/{table}/"  # fitness-analytics/bronze/activities_page_1.json
     logger = get_logger(__name__)
     logger.info(f"Reading raw data from {source_path}")
-    df = spark.read.schema(schema=schema).format(format).load(source_path)
+
+    reader = spark.read.format(format)
+    if schema is not None:
+        reader = reader.schema(schema=schema)
+
+    df = reader.load(source_path)
+
     logger.info(
         f"Data read successfully — {df.count()} rows, {len(df.columns)} columns"
     )
