@@ -145,6 +145,7 @@ CREATE TABLE IF NOT EXISTS {{ params.bronze_schema }}.{{ params.gears }}
 
 -- Create table activities_enriched under SILVER --
 CREATE TABLE IF NOT EXISTS {{ params.silver_schema }}.{{ params.activities_enriched }}
+(
     id BIGINT PRIMARY KEY,
     activity_id BIGINT,
 
