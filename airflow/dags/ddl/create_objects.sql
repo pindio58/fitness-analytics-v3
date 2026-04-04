@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS {{ params.bronze_schema }}.{{ params.gears }}
     -- derived (very useful)
     gear_type TEXT,
     
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
 
