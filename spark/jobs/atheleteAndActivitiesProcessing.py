@@ -17,10 +17,35 @@ from settings import settings
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
 from pyspark.sql import DataFrame
-from pyspark.sql.types import StringType, StructField, DoubleType, StructType, DateType
+from pyspark.sql.types import (
+    StringType,
+    StructField,
+    DoubleType,
+    StructType,
+    BooleanType,
+    LongType,
+)
 from pyspark.sql import SparkSession
 
-#
+# define gear schema
+gear_schema = StructType(
+    [
+        StructField("id", StringType(), True),
+        StructField("primary", BooleanType(), True),
+        StructField("name", StringType(), True),
+        StructField("nickname", StringType(), True),
+        StructField("resource_state", LongType(), True),
+        StructField("retired", BooleanType(), True),
+        StructField("distance", DoubleType(), True),
+        StructField("converted_distance", DoubleType(), True),
+        StructField("brand_name", StringType(), True),
+        StructField("model_name", StringType(), True),
+        StructField("description", StringType(), True),
+        StructField("weight", DoubleType(), True),
+        StructField("frame_type", LongType(), True),
+        StructField("notification_distance", LongType(), True),
+    ]
+)
 
 
 def main(spark: SparkSession):
@@ -49,6 +74,7 @@ def main(spark: SparkSession):
         layer=settings.BRONZE,
         table=settings.GEAR,
         format="json",
+        schema=gear_schema,
     )
 
     # -----------------------------
@@ -129,6 +155,9 @@ def main(spark: SparkSession):
         "brand_name",
         "model_name",
         F.col("distance").alias("gear_distance"),
+    )
+    gear_df = gear_df.withColumn(
+        "gear_type", F.when(F.col("gear_id").startswith("b"), "bike").otherwise("shoes")
     )
 
     # join with activities

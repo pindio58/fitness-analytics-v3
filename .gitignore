@@ -3,6 +3,7 @@ __pycache__/
 *.pyo
 *.pyd
 airflow/backup_dags
+airflow/dags/ddl_copy
 data
 logs
 k8/airflow/optional/values-dev-copy.yml
