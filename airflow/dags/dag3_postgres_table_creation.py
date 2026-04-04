@@ -45,8 +45,8 @@ from utils.defaults import (
 )
 def main():
     start = EmptyOperator(task_id="start")
-    create_table_task = SQLExecuteQueryOperator(
-        task_id="create-tables",
+    create_object_task = SQLExecuteQueryOperator(
+        task_id="create-objects",
         sql="ddl/create_objects.sql",
         params={
             "token_table": TOKEN_TABLE_NAME,
@@ -68,13 +68,7 @@ def main():
     )
     end = EmptyOperator(task_id="end")
 
-    trigger_dag_2 = TriggerDagRunOperator(
-        trigger_dag_id="fitness-analytics",
-        wait_for_completion=False,
-        task_id="trigger_dag2",
-    )
-
-    start >> create_table_task >> end >> trigger_dag_2
+    start >> create_object_task >> end
 
 
-etl()
+main()
