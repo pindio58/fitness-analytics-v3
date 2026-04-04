@@ -17,13 +17,13 @@ dags:
     enabled: true
     repo: https://github.com/pindio58/fitness-analytics-v3.git
     rev: HEAD
-    branch: add_gears
+    branch: table_create
     containerLifecycleHooks: {}
     containerName: git-sync
     depth: 1
     subPath: airflow/dags
     wait: 0
-    
+
   persistence:
     enabled: false
 
@@ -47,7 +47,7 @@ webserver:
           name: fitness-analytics-minio-configmap
           key: MINIO_ENDPOINT
   # envFrom:
-  #   - secretRef: 
+  #   - secretRef:
   #       name: fitness-analytics-strava-secret
   #   - configMapRef:
   #       name: fitness-analytics-strava-configmap
@@ -67,7 +67,7 @@ scheduler:
           key: MINIO_ENDPOINT
 
   # envFrom:
-  #   - secretRef: 
+  #   - secretRef:
   #       name: fitness-analytics-strava-secret
   #   - configMapRef:
   #       name: fitness-analytics-strava-configmap
@@ -86,12 +86,11 @@ apiServer:
           name: fitness-analytics-minio-configmap
           key: MINIO_ENDPOINT
   # envFrom:
-  #   - secretRef: 
+  #   - secretRef:
   #       name: fitness-analytics-strava-secret
   #   - configMapRef:
   #       name: fitness-analytics-strava-configmap
 
-   
 workers:
   env:
     - name: BUCKET_NAME
@@ -107,13 +106,12 @@ workers:
           key: MINIO_ENDPOINT
 
   # envFrom:
-  #   - secretRef: 
+  #   - secretRef:
   #       name: fitness-analytics-strava-secret
   #   - configMapRef:
   #       name: fitness-analytics-strava-configmap
 
-
-#  for following, please refer https://www.notion.so/Could-not-read-served-logs-Invalid-URL-http-8793-log-dag_id-No-host-supplied-2d5e0b22664f80598880f22e3a0e2474?v=2c2e0b22664f8095acf9000cdc510362&source=copy_link 
+#  for following, please refer https://www.notion.so/Could-not-read-served-logs-Invalid-URL-http-8793-log-dag_id-No-host-supplied-2d5e0b22664f80598880f22e3a0e2474?v=2c2e0b22664f8095acf9000cdc510362&source=copy_link
 webserverSecretKeySecretName: fitness-analytics-airflow-secret
 # config:
 #   core:
@@ -122,7 +120,6 @@ webserverSecretKeySecretName: fitness-analytics-airflow-secret
 #     hostname_callable: airflow.utils.net.get_host_ip_address
 #   api:
 #     hostname_callable: airflow.utils.net.get_host_ip_address
-
 
 # https://www.notion.so/rest-db-on-every-Airflow-restart-311e0b22664f80518723fdc146fabd00?source=copy_link
 migrateDatabaseJob:
