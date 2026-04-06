@@ -35,6 +35,8 @@ spec:
           name: fitness-analytics-minio-configmap
       - secretRef:
           name: fitness-analytics-minio-secrets
+      - secretRef:
+          name: fitness-analytics-postgres-secrets
 
   executor:
     cores: 1
@@ -46,6 +48,8 @@ spec:
           name: fitness-analytics-minio-configmap
       - secretRef:
           name: fitness-analytics-minio-secrets
+      - secretRef:
+          name: fitness-analytics-postgres-secrets
 
   restartPolicy:
     type: Never
