@@ -7,7 +7,7 @@ spec:
   type: Python
   mode: cluster
 
-  image: pindio58/fitness-spark-image:9.6
+  image: pindio58/fitness-spark-image:9.7
   imagePullPolicy: Always #IfNotPresent
 
   mainApplicationFile: local:///opt/spark/jobs/data_insert_in_postgres.py
