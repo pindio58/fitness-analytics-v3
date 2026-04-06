@@ -17,7 +17,7 @@ dags:
     enabled: true
     repo: https://github.com/pindio58/fitness-analytics-v3.git
     rev: HEAD
-    branch: table_create
+    branch: data_insert
     containerLifecycleHooks: {}
     containerName: git-sync
     depth: 1
