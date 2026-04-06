@@ -58,7 +58,7 @@ def main(spark) -> DataFrame:
     activities_df = read_remote_data(
         spark=spark,
         bucket_name=settings.BUCKET_NAME,
-        layer=settings.BRONZE,
+        layer=settings.SILVER,
         table=settings.ACTIVITIES_ENRICHED,
         format="parquet",
     )
