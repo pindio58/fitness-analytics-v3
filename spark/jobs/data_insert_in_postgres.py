@@ -13,12 +13,13 @@ activities = f"{settings.BRONZE_SCHEMA}.{settings.ACTIVITIES}"
 athlete = f"{settings.BRONZE_SCHEMA}.{settings.ATHLETE}"
 gears = f"{settings.BRONZE_SCHEMA}.{settings.GEARS}"
 
+activities_enriched = f"{settings.SILVER_SCHEMA}.{settings.ACTIVITIES_ENRICHED}"
+
 daily_summary = f"{settings.GOLD_SCHEMA}.{settings.DAILY_SUMMARY}"
 monthly_summary = f"{settings.GOLD_SCHEMA}.{settings.MONTHLY_SUMMARY}"
 type_summary = f"{settings.GOLD_SCHEMA}.{settings.TYPE_SUMMARY}"
 personal_records = f"{settings.GOLD_SCHEMA}.{settings.PERSONAL_RECORDS}"
 
-activities_enriched = f"{settings.SILVER_SCHEMA}.{settings.ACTIVITIES_ENRICHED}"
 
 # define gear schema
 from pyspark.sql.types import (
@@ -58,31 +59,14 @@ def main(spark) -> DataFrame:
         spark=spark,
         bucket_name=settings.BUCKET_NAME,
         layer=settings.BRONZE,
-        table=settings.ACTIVITIES,
-        format="json",
-    )
-
-    athlete_df = read_remote_data(
-        spark=spark,
-        bucket_name=settings.BUCKET_NAME,
-        layer=settings.BRONZE,
-        table=settings.ATHLETE,
-        format="json",
-    )
-
-    gear_df = read_remote_data(
-        spark=spark,
-        bucket_name=settings.BUCKET_NAME,
-        layer=settings.BRONZE,
-        table=settings.GEAR,
-        format="json",
-        schema=gear_schema,
+        table=settings.ACTIVITIES_ENRICHED,
+        format="parquet",
     )
 
     (
         activities_df.write.format("jdbc")
         .option("url", postgres_url)
-        .option("dbtable", activities)
+        .option("dbtable", activities_enriched)
         .option("user", settings.POSTGRES_USER)
         .option("password", settings.POSTGRES_PASSWORD)
         .mode("overwrite")
