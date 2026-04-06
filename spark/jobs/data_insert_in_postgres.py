@@ -55,7 +55,9 @@ gear_schema = StructType(
 def main(spark) -> DataFrame:
     postgres_url = f"jdbc:postgresql://{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}"
 
-    activities_df = read_remote_data(
+    # SILVER
+
+    activities_enriched_df = read_remote_data(
         spark=spark,
         bucket_name=settings.BUCKET_NAME,
         layer=settings.SILVER,
@@ -64,9 +66,83 @@ def main(spark) -> DataFrame:
     )
 
     (
-        activities_df.write.format("jdbc")
+        activities_enriched_df.write.format("jdbc")
         .option("url", postgres_url)
         .option("dbtable", activities_enriched)
+        .option("user", settings.POSTGRES_USER)
+        .option("password", settings.POSTGRES_PASSWORD)
+        .mode("overwrite")
+        .save()
+    )
+
+    # GOLD
+
+    daily_summary_df = read_remote_data(
+        spark=spark,
+        bucket_name=settings.BUCKET_NAME,
+        layer=settings.GOLD,
+        table=settings.DAILY_SUMMARY,
+        format="parquet",
+    )
+
+    (
+        daily_summary_df.write.format("jdbc")
+        .option("url", postgres_url)
+        .option("dbtable", daily_summary)
+        .option("user", settings.POSTGRES_USER)
+        .option("password", settings.POSTGRES_PASSWORD)
+        .mode("overwrite")
+        .save()
+    )
+
+    monthly_summary_df = read_remote_data(
+        spark=spark,
+        bucket_name=settings.BUCKET_NAME,
+        layer=settings.GOLD,
+        table=settings.MONTHLY_SUMMARY,
+        format="parquet",
+    )
+
+    (
+        monthly_summary_df.write.format("jdbc")
+        .option("url", postgres_url)
+        .option("dbtable", monthly_summary)
+        .option("user", settings.POSTGRES_USER)
+        .option("password", settings.POSTGRES_PASSWORD)
+        .mode("overwrite")
+        .save()
+    )
+
+    type_summary_df = read_remote_data(
+        spark=spark,
+        bucket_name=settings.BUCKET_NAME,
+        layer=settings.GOLD,
+        table=settings.TYPE_SUMMARY,
+        format="parquet",
+    )
+
+    (
+        type_summary_df.write.format("jdbc")
+        .option("url", postgres_url)
+        .option("dbtable", type_summary)
+        .option("user", settings.POSTGRES_USER)
+        .option("password", settings.POSTGRES_PASSWORD)
+        .mode("overwrite")
+        .save()
+    )
+
+    personal_records_df = read_remote_data(
+        spark=spark,
+        bucket_name=settings.BUCKET_NAME,
+        layer=settings.GOLD,
+        table=settings.PERSONAL_RECORDS,
+        format="parquet",
+    )
+
+    (
+        personal_records_df.write.format("jdbc")
+        .option("url", postgres_url)
+        .option("dbtable", personal_records)
         .option("user", settings.POSTGRES_USER)
         .option("password", settings.POSTGRES_PASSWORD)
         .mode("overwrite")
