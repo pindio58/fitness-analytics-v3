@@ -110,10 +110,19 @@ def main():
         filename=gear_files, layer=[PREFIX_BRONZE], table=["gears"]
     )
     end = EmptyOperator(task_id="end")
+
+    trigger_dag_2 = TriggerDagRunOperator(
+        trigger_dag_id="sparkProcessing",
+        wait_for_completion=False,
+        task_id="trigger_dag2",
+    )
+
     start >> files >> uploads >> end
     start >> athlete_files >> athlete_uploads >> end
 
     files >> gear_ids >> gear_files >> gear_uploads >> end
+
+    end >> trigger_dag_2
 
 
 main()

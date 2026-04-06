@@ -68,7 +68,13 @@ def main():
     )
     end = EmptyOperator(task_id="end")
 
-    start >> create_object_task >> end
+    trigger_dag_4 = TriggerDagRunOperator(
+        trigger_dag_id="insert-data-postgres",
+        wait_for_completion=False,
+        task_id="trigger_dag4",
+    )
+
+    start >> create_object_task >> end >> trigger_dag_4
 
 
 main()
