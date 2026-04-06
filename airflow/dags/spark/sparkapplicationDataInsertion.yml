@@ -7,11 +7,10 @@ spec:
   type: Python
   mode: cluster
 
-  image: pindio58/fitness-spark-image:8.4
-  imagePullPolicy: IfNotPresent
+  image: pindio58/fitness-spark-image:9.6
+  imagePullPolicy: Always #IfNotPresent
 
-
-  mainApplicationFile: local:///opt/spark/jobs/data_insertion.py
+  mainApplicationFile: local:///opt/spark/jobs/data_insert_in_postgres.py
   sparkVersion: "4.0.0"
 
   sparkConf:
@@ -35,8 +34,6 @@ spec:
       - configMapRef:
           name: fitness-analytics-minio-configmap
       - secretRef:
-          name: fitness-analytics-postgres-secrets
-      - secretRef:
           name: fitness-analytics-minio-secrets
 
   executor:
@@ -48,8 +45,7 @@ spec:
       - configMapRef:
           name: fitness-analytics-minio-configmap
       - secretRef:
-          name: fitness-analytics-postgres-secrets
-      - secretRef:
           name: fitness-analytics-minio-secrets
+
   restartPolicy:
     type: Never

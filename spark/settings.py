@@ -28,6 +28,18 @@ class Settings(BaseSettings):
     SCHEMA_NAME: str = "fitness"
     TABLE_NAME: str = "fact_daily_workouts"
     FILENAME: Path = Path("synthetic_fitness_6_months.csv")
+    SILVER_SCHEMA: str = "silver"
+    GOLD_SCHEMA: str = "gold"
+    BRONZE_SCHEMA: str = "bronze"
+    ATHLETE: str = "athlete"
+    ACTIVITIES: str = "activities"
+    GEARS: str = "gears"
+    ACTIVITIES_ENRICHED: str = "activities_enriched"
+    DAILY_SUMMARY: str = "daily_summary"
+    MONTHLY_SUMMARY: str = "monthly_summary"
+    TYPE_SUMMARY: str = "type_summary"
+    PERSONAL_RECORDS: str = "personal_records"
+    CONFIG_SCHEMA: str = "config"
 
     class Config:
         env_file = ".env"

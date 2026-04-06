@@ -3,6 +3,7 @@ __pycache__/
 *.pyo
 *.pyd
 airflow/backup_dags
+airflow/backup_spark
 airflow/dags/ddl_copy
 data
 logs
@@ -10,6 +11,7 @@ k8/airflow/optional/values-dev-copy.yml
 k8/airflow/optional/default-values.yml
 k8/airflow/optional/default-values-not-all.yml
 airflow/dags/spark/sparkapplicationCleaningUsingeHelmTemplate.yml
+spark/backup_jobs
 k8/spark/spark-valuesForHelmTemplate.yml
 StravaAPIDetails.yml
 fitness-analytics
