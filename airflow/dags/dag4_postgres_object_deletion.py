@@ -6,14 +6,14 @@ from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOpe
 
 
 from utils.constants import (
+    AIRFLOW_CONN_POSTGRES,
+    POSTGRES_DATABASE,
     GOLD_SCHEMA,
     SILVER_SCHEMA,
     BRONZE_SCHEMA,
     CONFIG_SCHEMA,
 )
 from utils.defaults import (
-    AIRFLOW_CONN_POSTGRES,
-    POSTGRES_DATABASE,
     DEFAULT_ARGS,
     CATCHUP,
     SCHEDULE,
