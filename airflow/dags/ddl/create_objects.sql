@@ -293,7 +293,7 @@ CREATE TABLE IF NOT EXISTS {{ params.gold_schema }}.{{ params.personal_records }
     max_elevation DOUBLE PRECISION
 );
 
-CREATE INDEX idx_activities_athlete_id ON {{ params.bronze_schema }}.{{ params.activities }}(athlete_id);
-CREATE INDEX idx_activities_gear_id ON {{ params.bronze_schema }}.{{ params.activities }}(gear_id);
-CREATE INDEX idx_silver_day ON {{ params.silver_schema }}.{{ params.activities_enriched }}(day);
-CREATE INDEX idx_silver_year_month ON {{ params.silver_schema }}.{{ params.activities_enriched }}(year, month);
+CREATE INDEX IF NOT EXISTS idx_activities_athlete_id ON {{ params.bronze_schema }}.{{ params.activities }}(athlete_id);
+CREATE INDEX IF NOT EXISTS idx_activities_gear_id ON {{ params.bronze_schema }}.{{ params.activities }}(gear_id);
+CREATE INDEX IF NOT EXISTS idx_silver_day ON {{ params.silver_schema }}.{{ params.activities_enriched }}(day);
+CREATE INDEX IF NOT EXISTS idx_silver_year_month ON {{ params.silver_schema }}.{{ params.activities_enriched }}(year, month);
