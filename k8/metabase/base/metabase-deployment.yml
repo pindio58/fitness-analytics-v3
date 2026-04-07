@@ -18,6 +18,30 @@ spec:
           image: metabase/metabase:latest
           ports:
             - containerPort: 3000
+          env:
+            - name: MB_DB_TYPE
+              value: postgres
+            - name: MB_DB_DBNAME
+              valueFrom:
+                secretKeyRef:
+                  name: fitness-analytics-postgres-secrets
+                  key: POSTGRES_DB
+            - name: MB_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: fitness-analytics-postgres-secrets
+                  key: POSTGRES_USER
+                  optional: false
+            - name: MB_DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: fitness-analytics-postgres-secrets
+                  key: POSTGRES_PASSWORD
+                  optional: false
+            - name: MB_DB_HOST
+              value: fitness-analytics-postgres-service
+            - name: MB_DB_PORT
+              value: "5432"
           resources:
             requests:
               memory: "512Mi"
