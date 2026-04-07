@@ -1,4 +1,4 @@
-# 🏃‍♂️ Fitness Analytics Data Engineering Project (v3)
+# Fitness Analytics Data Engineering Project (v3)
 
 ## What is this project?
 
@@ -139,11 +139,10 @@ data/
 
 ```
 docs/
- ├── architecture.md
- ├── airflow_design.md
- ├── spark_design.md
- ├── postgres_design.md
- └── metabase.md
+├── metabase.md
+├── Strava_API_Complete_Setup_Guide.md
+├── Strava_API_Registration_Guide.md
+└── Strava_Tokens_Explanation.md
 ```
 
 ---
@@ -153,7 +152,7 @@ docs/
 ### 1. Clone Repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/pindio58/fitness-analytics-v3.git
 cd fitness-analytics-v3
 ```
 
@@ -161,25 +160,39 @@ cd fitness-analytics-v3
 
 ### 2. Configure Secrets (VERY IMPORTANT)
 
-You must update all template files:
+You must create actual config/secret files from the provided templates. After copying, make sure to update the values (e.g., credentials, configs) inside these files before deploying.
+
+#### Airflow
+
+
+```bash
+cp k8/airflow/base/airflow-secret.template.yml k8/airflow/base/airflow-secret.yml
+cp k8/airflow/base/airflow-configmap.template.yml k8/airflow/base/airflow-configmap.yml
+
+```
 
 #### Strava
 
-```
-k8/strava/base/strava-secret.template.yml
-k8/strava/base/strava-configmap.template.yml
+```bash
+cp k8/strava/base/strava-secret.template.yml k8/strava/base/strava-configmap.template.yml
 ```
 
 #### PostgreSQL
 
-```
-k8/postgres/base/postgres-secret.template.yml
+```bash
+cp k8/postgres/base/postgres-secret.template.yml k8/postgres/base/postgres-secret.yml
 ```
 
 #### MinIO
 
+```bash
+cp k8/minio/base/minio-secret.template.yml k8/minio/base/minio-secret.yml
 ```
-k8/minio/base/minio-secret.template.yml
+
+#### Spark
+
+```bash
+cp k8/spark/base/spark-secret.template.yml k8/spark/base/spark-secret.yml
 ```
 
 Replace placeholders with real values
@@ -210,30 +223,35 @@ kubectl get svc
 
 ---
 
-### 5. Access Services
+### 5. Access Services (which is already part of `deploy-all.sh`)
 
 #### Airflow
 
 ```bash
-kubectl port-forward svc/airflow-webserver 8080:8080
+kubectl port-forward svc/airflow-api-server 8080:8080
 ```
 
 #### MinIO
 
 ```bash
-kubectl port-forward svc/minio 9000:9000
+kubectl port-forward svc/fitness-analytics-minio-service 9001:9001
 ```
 
 #### PostgreSQL
 
 ```bash
-kubectl port-forward svc/postgres 5432:5432
+nohup kubectl port-forward svc/fitness-analytics-postgres-service 5433:5432
+```
+
+#### Airflow Postgres
+```bash
+kubectl port-forward svc/airflow-postgresql  5432:5432
 ```
 
 #### Metabase
 
 ```bash
-kubectl port-forward svc/metabase 3000:3000
+kubectl port-forward svc/fitness-analytics-metabase-service 3000:3000
 ```
 
 ---
