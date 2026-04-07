@@ -9,6 +9,7 @@ COPY airflow/dags/spark /opt/airflow/spark
 COPY airflow/dags/utils /opt/airflow/utils
 COPY data /opt/airflow/data
 COPY strava_module /opt/airflow/strava_module
+COPY project_utils /opt/airflow/project_utils
 
 
 RUN chown -R airflow: /opt/airflow

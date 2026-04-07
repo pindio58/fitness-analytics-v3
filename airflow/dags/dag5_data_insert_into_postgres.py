@@ -6,6 +6,10 @@ from airflow.providers.standard.operators.empty import EmptyOperator
 from airflow.sdk import dag
 from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOperator
 
+from utils.commonUtils import get_logger
+
+logger = get_logger(__name__)
+
 from utils.defaults import (
     DEFAULT_ARGS,
     CATCHUP,
@@ -26,6 +30,7 @@ from utils.constants import AIRFLOW_CONN_SPARK
     is_paused_upon_creation=IS_PAUSED_UPON_CREATION,
 )
 def main():
+    logger.info("Starting insert-data-postgres DAG definition")
     start = EmptyOperator(task_id="start")
     end = EmptyOperator(task_id="end")
 
@@ -37,7 +42,7 @@ def main():
         kubernetes_conn_id=AIRFLOW_CONN_SPARK,
         delete_on_termination=True,
     )
-
+    logger.info("insert-data-postgres DAG configured")
     start >> spark_test >> end
 
 

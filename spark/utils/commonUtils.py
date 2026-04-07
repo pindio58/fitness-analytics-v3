@@ -1,45 +1,15 @@
 import logging
 import requests
 from pathlib import Path
-from datetime import datetime 
-from zoneinfo import ZoneInfo
 
-curr_time = datetime.now(ZoneInfo('Asia/Kolkata')).strftime("%Y%m%d%H%M%S%f")[:-5]
+try:
+    from project_utils.logger import get_logger
+except ImportError:
+    import sys
+    from pathlib import Path as _Path
 
-
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-# print(BASE_DIR)
-LOG_DIR = BASE_DIR / "logs"
-LOG_FILE = LOG_DIR / f"logs-{curr_time}.log"
-
-def get_logger(name:str):
-    logger = logging.getLogger(name)
-    if logger.handlers:
-        return logger
-    
-    logger.setLevel(logging.INFO)
-    logger.propagate = False
-
-    # file handler
-    file_handler = logging.FileHandler(LOG_FILE, delay=True)
-    file_handler.setLevel(logging.DEBUG)
-
-    # Console handler
-    console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.INFO)
-
-    #format
-    formattter = logging.Formatter(
-        "%(asctime)s | %(levelname)s | %(name)s | %(funcName)s | %(message)s"
-    )
-    file_handler.setFormatter(formattter)
-    console_handler.setFormatter(formattter)
-
-    # logger.addHandler(file_handler)
-    # logger.addHandler(console_handler)
-
-    return logger
-
+    sys.path.insert(0, str(_Path(__file__).resolve().parents[3]))
+    from project_utils.logger import get_logger
 
 
 def download_file(url, path):
@@ -59,7 +29,7 @@ def download_file(url, path):
     return str(path)
 
 
-def delete_file(file_name:str) -> bool:
+def delete_file(file_name: str) -> bool:
     logger = get_logger(__name__)
     file_name = Path(file_name)
     logger.info(f"deleting file {file_name}")

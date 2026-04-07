@@ -2,8 +2,10 @@
 from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 from airflow.providers.standard.operators.empty import EmptyOperator
 from airflow.sdk import dag
-from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOperator
 
+from utils.commonUtils import get_logger
+
+logger = get_logger(__name__)
 
 from utils.constants import (
     AIRFLOW_CONN_POSTGRES,
@@ -47,6 +49,7 @@ def main():
     )
     end = EmptyOperator(task_id="end")
 
+    logger.info("delete-postgres-objects DAG configured")
     start >> create_object_task >> end
 
 

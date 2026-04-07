@@ -10,8 +10,10 @@ if str(BASE_DIR) not in sys.path:
     sys.path.append(str(BASE_DIR))
 
 # local imports
-from utils.sparkUtils import get_spark_session, get_logger, write_data, read_remote_data
+from utils.sparkUtils import get_spark_session, write_data, read_remote_data, get_logger
 from settings import settings
+
+logger = get_logger(__name__)
 
 # spark imports
 from pyspark.sql import functions as F
@@ -49,6 +51,8 @@ gear_schema = StructType(
 
 
 def main(spark: SparkSession):
+    logger.info("Starting athlete and activities processing job")
+
     # -----------------------------
     # Load Data (Bronze Layer)
     # -----------------------------
@@ -245,6 +249,8 @@ def main(spark: SparkSession):
         layer=settings.GOLD,
         table="personal_records",
     )
+
+    logger.info("Completed athlete and activities processing job")
 
 
 if __name__ == "__main__":

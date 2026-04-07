@@ -7,24 +7,27 @@
 
 import psycopg2
 import requests
-import logging
 import os
+import sys
 from datetime import datetime, timezone, timedelta
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 
 from strava_module.settings import settings
 
-# -------------------------
-# Logging configuration
-# -------------------------
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
-)
+# try:
+#     from project_utils.logger import get_logger
+# except ImportError:
+#     from pathlib import Path as _Path
 
-logger = logging.getLogger("strava_token_manager")
+#     sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
+#     from project_utils.logger import get_logger
 
-athlete_id=os.getenv('athlete_id')
+from project_utils.logger import get_logger
+
+logger = get_logger("strava_token_manager")
+
+athlete_id = os.getenv("athlete_id")
+
 
 # -------------------------
 # DB Connection

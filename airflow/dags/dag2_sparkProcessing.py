@@ -1,15 +1,16 @@
-from airflow.sdk import task, dag
+from airflow.sdk import dag
 from airflow.providers.standard.operators.empty import EmptyOperator
 from airflow.providers.cncf.kubernetes.operators.spark_kubernetes import (
     SparkKubernetesOperator,
 )
 from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOperator
 
-
 from datetime import datetime
-import os
-from pathlib import Path
+
 from utils.constants import AIRFLOW_CONN_SPARK
+from utils.commonUtils import get_logger
+
+logger = get_logger(__name__)
 
 from utils.defaults import (
     DEFAULT_ARGS,
@@ -17,7 +18,6 @@ from utils.defaults import (
     SCHEDULE,
     START_DATE,
     IS_PAUSED_UPON_CREATION,
-    PREFIX_BRONZE,
 )
 
 
@@ -31,6 +31,7 @@ from utils.defaults import (
     is_paused_upon_creation=IS_PAUSED_UPON_CREATION,
 )
 def etl():
+    logger.info("Starting sparkProcessing DAG definition")
     start = EmptyOperator(task_id="start")
     end = EmptyOperator(task_id="end")
 

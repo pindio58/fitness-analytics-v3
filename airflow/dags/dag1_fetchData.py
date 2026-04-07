@@ -22,6 +22,8 @@ from utils.defaults import (
 
 from strava_module.loader import fetch_activities_to_file, fetch_athlete, fetch_gear
 
+logger = get_logger(__name__)
+
 athlete_id = os.getenv("athlete_id")
 
 # ============================================
@@ -32,12 +34,14 @@ athlete_id = os.getenv("athlete_id")
 @task
 def fetch_files(per_page):
     files = [str(filename) for filename in fetch_activities_to_file(per_page=per_page)]
+    logger.info(f"Fetched {len(files)} activity files")
     return files
 
 
 @task
 def fetch_athlete_files():
     files = [str(filename) for filename in fetch_athlete()]
+    logger.info(f"Fetched {len(files)} athlete files")
     return files
 
 
@@ -53,7 +57,9 @@ def extract_gear_ids(files):
                 gid = activity.get("gear_id")
                 if gid:
                     gear_ids.add(gid)
-    return list(gear_ids)
+    gear_ids = list(gear_ids)
+    logger.info(f"Extracted {len(gear_ids)} gear IDs from files")
+    return gear_ids
 
 
 @task
@@ -70,6 +76,7 @@ def upload_file(filename, layer, table):
     filename = Path(filename)
     bucket_name = os.environ["BUCKET_NAME"]
     key = f"{layer.rstrip('/')}/{table}/{filename.name}"
+    logger.info(f"Uploading {filename.name} to s3://{bucket_name}/{key}")
     upload_file_to_minio(
         aws_conn_id=AIRFLOW_CONN_MINIO,
         filename=filename,

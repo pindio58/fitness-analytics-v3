@@ -4,17 +4,22 @@
 ############################################
 
 import requests
-import logging
 import psycopg2
+from pathlib import Path
 
 from settings import settings
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s",
-)
+# try:
+#     from project_utils.logger import get_logger
+# except ImportError:
+#     from pathlib import Path as _Path
 
-logger = logging.getLogger(__name__)
+#     sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
+#     from project_utils.logger import get_logger
+
+from project_utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 # -------------------------
@@ -44,7 +49,7 @@ def exchange_code_for_token(code):
     }
 
     response = requests.post(
-       settings.AUTH_URL,
+        settings.AUTH_URL,
         data=payload,
     )
 

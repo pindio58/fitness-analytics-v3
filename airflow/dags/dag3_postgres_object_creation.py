@@ -4,8 +4,10 @@ from airflow.providers.standard.operators.empty import EmptyOperator
 from airflow.sdk import dag
 from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOperator
 
-# import python modules
-from datetime import datetime
+
+from utils.commonUtils import get_logger
+
+logger = get_logger(__name__)
 
 from utils.constants import (
     AIRFLOW_CONN_POSTGRES,
@@ -74,6 +76,7 @@ def main():
         task_id="trigger_dag4",
     )
 
+    logger.info("create-postgres-tables DAG configured")
     start >> create_object_task >> end >> trigger_dag_4
 
 

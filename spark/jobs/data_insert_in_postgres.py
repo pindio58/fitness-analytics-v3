@@ -7,6 +7,8 @@ from pyspark.sql import DataFrame
 from utils.sparkUtils import get_spark_session, get_logger, read_remote_data
 from settings import settings
 
+logger = get_logger(__name__)
+
 
 # tables
 activities = f"{settings.BRONZE_SCHEMA}.{settings.ACTIVITIES}"
@@ -53,6 +55,7 @@ gear_schema = StructType(
 
 # starting
 def main(spark) -> DataFrame:
+    logger.info("Starting data insert job into Postgres")
     postgres_url = f"jdbc:postgresql://{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}"
 
     # SILVER
@@ -74,6 +77,7 @@ def main(spark) -> DataFrame:
         .mode("overwrite")
         .save()
     )
+    logger.info("Inserted activities_enriched into Postgres")
 
     # GOLD
 
@@ -148,6 +152,8 @@ def main(spark) -> DataFrame:
         .mode("overwrite")
         .save()
     )
+
+    logger.info("Completed data insert job into Postgres")
 
 
 if __name__ == "__main__":
