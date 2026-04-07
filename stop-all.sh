@@ -25,5 +25,6 @@ kubectl delete -f "$K8_DIR/minio/base" || true
 kubectl delete -f "$K8_DIR/postgres/base" || true
 kubectl delete -f "$K8_DIR/airflow/base" || true
 kubectl delete -f "$K8_DIR/spark/base" || true
+kubectl delete -f "$K8_DIR/metabase/base" || true
 
 echo "All services stopped and resources deleted."
