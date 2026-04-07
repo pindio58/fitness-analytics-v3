@@ -20,6 +20,9 @@ echo "Uninstalling Airflow and Spark Helm releases..."
 helm uninstall airflow -n fitness-analytics-namespace || true
 helm uninstall spark-operator -n fitness-analytics-namespace || true
 
+echo "Force cleaning stuck pods..."
+kubectl delete pods -n fitness-analytics-namespace  --all --grace-period=0 --force || true
+
 echo "Deleting all resources for MinIO, Postgres, Airflow, Spark..."
 kubectl delete -f "$K8_DIR/minio/base" || true
 kubectl delete -f "$K8_DIR/postgres/base" || true
