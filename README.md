@@ -1,6 +1,6 @@
 # 🏃‍♂️ Fitness Analytics Data Engineering Project (v3)
 
-## 📌 What is this project?
+## What is this project?
 
 This is a **production-style data engineering project** that builds a complete pipeline around personal fitness data (cycling, running, walking, etc.) using modern tools.
 
@@ -12,11 +12,11 @@ The project simulates a real-world system where data is:
 * Loaded into a warehouse
 * Visualized for insights
 
-👉 Goal: Become **job-ready as a Data Engineer** by building a realistic, end-to-end system.
+
 
 ---
 
-## 🧱 Architecture (High-Level)
+## Architecture (High-Level)
 
 **Strava API → Airflow → MinIO → Spark → PostgreSQL → Metabase**
 
@@ -29,7 +29,7 @@ The project simulates a real-world system where data is:
 
 ---
 
-## 📂 Project Structure (Important Parts Explained)
+## Project Structure (Important Parts Explained)
 
 ### 🔹 Airflow (Orchestration)
 
@@ -56,7 +56,6 @@ airflow/
  │       └── defaults.py
 ```
 
-👉 Controls full pipeline execution
 
 ---
 
@@ -72,7 +71,7 @@ spark/
  └── config.py
 ```
 
-👉 Responsible for:
+Responsible for:
 
 * Cleaning raw JSON data
 * Transforming fitness data
@@ -90,7 +89,7 @@ strava_module/
  └── bootstrap_auth.py
 ```
 
-👉 Handles:
+Handles:
 
 * Authentication
 * Token refresh
@@ -109,8 +108,7 @@ k8/
  ├── metabase/
  └── strava/
 ```
-
-👉 Contains all manifests for deploying services
+Contains all manifests for deploying services
 
 ---
 
@@ -122,7 +120,7 @@ docker/
  └── spark/
 ```
 
-👉 Custom images for Airflow and Spark
+Custom images for Airflow and Spark
 
 ---
 
@@ -150,7 +148,7 @@ docs/
 
 ---
 
-## 🚀 How to Run the Project
+## How to Run the Project
 
 ### 1. Clone Repository
 
@@ -184,7 +182,7 @@ k8/postgres/base/postgres-secret.template.yml
 k8/minio/base/minio-secret.template.yml
 ```
 
-👉 Replace placeholders with real values
+Replace placeholders with real values
 
 ---
 
@@ -240,7 +238,7 @@ kubectl port-forward svc/metabase 3000:3000
 
 ---
 
-## 🔄 Pipeline Flow (DAGs)
+## Pipeline Flow (DAGs)
 
 ### DAG 1 → Fetch Data
 
@@ -265,7 +263,7 @@ kubectl port-forward svc/metabase 3000:3000
 
 ---
 
-## 🧠 Data Architecture (Medallion)
+## Data Architecture (Medallion)
 
 * **Bronze** → Raw JSON (MinIO)
 * **Silver** → Cleaned tables
@@ -284,7 +282,7 @@ kubectl port-forward svc/metabase 3000:3000
 
 ---
 
-## ⚠️ Important Concepts
+## Important Concepts
 
 ### Kubernetes DNS (Very Important)
 
@@ -300,7 +298,7 @@ Example:
 fitness-analytics-postgres-service.default.svc.cluster.local
 ```
 
-👉 Why?
+Why?
 
 * Pods run in isolated networks
 * Short names may fail across namespaces
@@ -308,7 +306,7 @@ fitness-analytics-postgres-service.default.svc.cluster.local
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Check Logs
 
@@ -330,7 +328,7 @@ kubectl rollout restart deployment <name>
 
 ---
 
-## 🧹 Stop Everything
+## Stop Everything
 
 ```bash
 chmod +x stop-all.sh
@@ -339,16 +337,15 @@ chmod +x stop-all.sh
 
 ---
 
-## 📈 Future Improvements
+## Future Improvements
 
-* Add Kafka for streaming
+
 * Add Prometheus + Grafana monitoring
-* Add ML predictions (calories, performance)
 * CI/CD pipeline
 
 ---
 
-## 💡 Why This Project Matters
+## Why This Project Matters
 
 This project demonstrates:
 
@@ -357,11 +354,11 @@ This project demonstrates:
 * Cloud-native infra (Kubernetes)
 * Data modeling (warehouse design)
 
-👉 Exactly what companies expect from a **Data Engineer**
+
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Feel free to fork and improve.
 
