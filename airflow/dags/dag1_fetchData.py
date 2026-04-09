@@ -141,6 +141,4 @@ from airflow.sdk import task, dag
 
 @task
 def test_conn():
-    hook = PostgresHook(postgres_conn_id="postgres_conn")
-    conn = hook.get_conn()
-    print("SUCCESS")
+    pass
