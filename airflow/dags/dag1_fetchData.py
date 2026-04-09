@@ -134,11 +134,17 @@
 
 # main()
 
-
-from utils.constants import AIRFLOW_CONN_MINIO
-from airflow.sdk import task, dag
+from airflow.sdk import dag, task
 
 
 @task
-def test_conn():
-    print(AIRFLOW_CONN_MINIO)
+def test():
+    print("OK")
+
+
+@dag(schedule=None, start_date=None, catchup=False)
+def test_dag():
+    test()
+
+
+test_dag()
