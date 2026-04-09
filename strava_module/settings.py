@@ -17,7 +17,10 @@ class Settings(BaseSettings):
 
     # for local db connection
     pg_host: str = "localhost"
+    pg_host_k8: str = "fitness-analytics-postgres-service"
+
     pg_port: str = "5433"
+    pg_port_k8: str = "5432"
     pg_user: str
     pg_password: str
     pg_db: str = "postgresdb"

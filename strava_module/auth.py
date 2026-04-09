@@ -42,8 +42,8 @@ def get_connection():
         # hook = PostgresHook(postgres_conn_id=settings.AIRFLOW_CONN_POSTGRES)
         # conn = hook.get_conn()
         conn = psycopg2.connect(
-            host=settings.pg_host,
-            port=settings.pg_port,
+            host=settings.pg_host_k8,
+            port=settings.pg_port_k8,
             database=settings.pg_db,
             user=settings.pg_user,
             password=settings.pg_password,

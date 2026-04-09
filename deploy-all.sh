@@ -27,6 +27,8 @@ apply_folder "$K8_DIR/strava/base"
 
 ## 3. Postgres: apply base YAMLs
 apply_folder "$K8_DIR/postgres/base"
+nohup kubectl port-forward svc/fitness-analytics-postgres-service 5433:5432 -n fitness-analytics-namespace > "$WORKDIR/postgres-port.log" 2>&1 &
+
 
 ## 4. Airflow: apply base YAMLs, then start
 apply_folder "$K8_DIR/airflow/base"
@@ -50,7 +52,7 @@ echo "Starting port-forwarding..."
 # MinIO (default 9001)
 nohup kubectl port-forward svc/fitness-analytics-minio-service 9001:9001 -n fitness-analytics-namespace > "$WORKDIR/minio-port.log" 2>&1 &
 # Postgres (default 5432)
-nohup kubectl port-forward svc/fitness-analytics-postgres-service 5433:5432 -n fitness-analytics-namespace > "$WORKDIR/postgres-port.log" 2>&1 &
+# nohup kubectl port-forward svc/fitness-analytics-postgres-service 5433:5432 -n fitness-analytics-namespace > "$WORKDIR/postgres-port.log" 2>&1 &
 # Airflow webserver (default 8080)
 nohup kubectl port-forward svc/airflow-api-server 8080:8080 -n fitness-analytics-namespace > "$WORKDIR/airflow-port.log" 2>&1 &
 # Airflow postgres 
