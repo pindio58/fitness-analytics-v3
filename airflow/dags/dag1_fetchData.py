@@ -135,6 +135,7 @@
 # main()
 
 from airflow.sdk import dag, task
+from utils import constants
 
 
 @task
