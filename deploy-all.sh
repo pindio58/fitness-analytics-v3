@@ -22,13 +22,16 @@ apply_folder() {
 ## 1. MinIO: apply base YAMLs
 apply_folder "$K8_DIR/minio/base"
 
-## 2. Postgres: apply base YAMLs
+## 2. MinIO: apply base YAMLs
+apply_folder "$K8_DIR/strava/base"
+
+## 3. Postgres: apply base YAMLs
 apply_folder "$K8_DIR/postgres/base"
 
-## 3. Airflow: apply base YAMLs, then start
+## 4. Airflow: apply base YAMLs, then start
 apply_folder "$K8_DIR/airflow/base"
 
-## 4. Metabase: apply base YAMLs, then start
+## 5. Metabase: apply base YAMLs, then start
 apply_folder "$K8_DIR/metabase/base"
 
 cd "$K8_DIR/airflow"
