@@ -253,6 +253,7 @@ kubectl port-forward svc/airflow-postgresql  5432:5432
 ```bash
 kubectl port-forward svc/fitness-analytics-metabase-service 3000:3000
 ```
+---
 
 ### 6. Make Airflow connections
 
@@ -265,6 +266,7 @@ kubectl port-forward svc/fitness-analytics-metabase-service 3000:3000
 #### a. MinIo connection
 * Please follow step 3 at this [link](https://www.notion.so/Integrate-Airflow-and-MinIO-2cde0b22664f80a49942c5c30262d978?v=2cde0b22664f8014b67e000cbb85deb6&source=copy_link)
 
+---
 
 ### 7. Insert strava token Manually
 * Once you have the strava token, please first manually insert the data in table `config.strava_tokens`
