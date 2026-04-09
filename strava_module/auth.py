@@ -34,20 +34,20 @@ athlete_id = os.getenv("athlete_id")
 # DB Connection
 # -------------------------
 def get_connection():
-    from airflow.providers.postgres.hooks.postgres import PostgresHook
+    # from airflow.providers.postgres.hooks.postgres import PostgresHook
 
     try:
         logger.info("Opening database connection")
 
-        # conn = psycopg2.connect(
-        #     database="postgresdb",
-        #     user="postgresadmin",
-        #     password="admin123",
-        #     host="fitness-analytics-postgres-service",
-        #     port="5432",
-        # )
-        hook = PostgresHook(postgres_conn_id=settings.AIRFLOW_CONN_POSTGRES)
-        conn = hook.get_conn()
+        # hook = PostgresHook(postgres_conn_id=settings.AIRFLOW_CONN_POSTGRES)
+        # conn = hook.get_conn()
+        conn = psycopg2.connect(
+            host=settings.pg_host,
+            port=settings.pg_port,
+            database=settings.pg_db,
+            user=settings.pg_user,
+            password=settings.pg_password,
+        )
         logger.info("Database connection established")
         return conn
 
