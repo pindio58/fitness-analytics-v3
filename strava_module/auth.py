@@ -10,7 +10,8 @@ import requests
 import os
 import sys
 from datetime import datetime, timezone, timedelta
-from airflow.providers.postgres.hooks.postgres import PostgresHook
+
+# from airflow.providers.postgres.hooks.postgres import PostgresHook
 
 from strava_module.settings import settings
 
@@ -33,6 +34,8 @@ athlete_id = os.getenv("athlete_id")
 # DB Connection
 # -------------------------
 def get_connection():
+    from airflow.providers.postgres.hooks.postgres import PostgresHook
+
     try:
         logger.info("Opening database connection")
 
