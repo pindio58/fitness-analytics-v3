@@ -135,7 +135,7 @@
 # main()
 
 from airflow.sdk import dag, task
-from utils import constants
+from utils.constants import AIRFLOW_CONN_MINIO
 
 
 @task
