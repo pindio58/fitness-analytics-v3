@@ -136,6 +136,7 @@
 
 from airflow.sdk import dag, task
 from utils.constants import AIRFLOW_CONN_MINIO
+from strava_module.loader import fetch_activities_to_file, fetch_athlete, fetch_gear
 
 
 @task
