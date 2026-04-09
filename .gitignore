@@ -22,3 +22,4 @@ gitSteps.txt
 k8/**/base/*secret.yml
 !k8/**/base/*template.yml
 k8/strava/base/strava-configmap.yml
+connections.yml
