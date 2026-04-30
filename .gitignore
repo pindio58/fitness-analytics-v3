@@ -22,3 +22,9 @@ gitSteps.txt
 k8/**/base/*secret.yml
 !k8/**/base/*template.yml
 k8/strava/base/strava-configmap.yml
+k8/prometheus/base/prom_configmap.yml
+k8/prometheus/base/prom_deployment.yml
+k8/prometheus/base/prom_service.yml
+
+docs/valuesOfAirflow.yml
+k8/prometheus/airflowvalues.yml

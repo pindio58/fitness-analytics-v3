@@ -6,7 +6,7 @@ set -e
 
 WORKDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 K8_DIR="$WORKDIR/k8"
-LOG_FILE="$WORKDIR/stop-all.log"
+LOG_FILE="$WORKDIR/logsOfStop.log"
 
 # Redirect all output to log file and console
 exec > >(tee -a "$LOG_FILE") 2>&1
@@ -19,6 +19,8 @@ pkill -f "kubectl port-forward" || true
 echo "Uninstalling Airflow and Spark Helm releases..."
 helm uninstall airflow -n fitness-analytics-namespace || true
 helm uninstall spark-operator -n fitness-analytics-namespace || true
+helm uninstall prometheus -n fitness-analytics-namespace || true
+helm uninstall statsd -n fitness-analytics-namespace || true
 
 echo "Force cleaning stuck pods..."
 kubectl delete pods -n fitness-analytics-namespace  --all --grace-period=0 --force || true
@@ -29,5 +31,6 @@ kubectl delete -f "$K8_DIR/postgres/base" || true
 kubectl delete -f "$K8_DIR/airflow/base" || true
 kubectl delete -f "$K8_DIR/spark/base" || true
 kubectl delete -f "$K8_DIR/metabase/base" || true
+kubectl delete -f "$K8_DIR/prometheus/base" || true
 
 echo "All services stopped and resources deleted."
