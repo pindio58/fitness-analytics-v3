@@ -28,11 +28,12 @@ apply_folder "$K8_DIR/strava/base"
 ## 3. Postgres: apply base YAMLs
 apply_folder "$K8_DIR/postgres/base"
 
-## 4. Prometheus: apply base YAMLs, then start
-apply_folder "$K8_DIR/prometheus/base/prom_servicemonitor.yml"
+## 4. Prometheus: apply base YAMLs, then start prmetheus, statsd and postgresdb exporter
+apply_folder "$K8_DIR/prometheus/base"
 cd "$K8_DIR/prometheus"
 ./prom-start.sh
 ./statsd-start.sh
+./postgresexporter-start.sh
 cd "$WORKDIR"
 
 ## 5. Metabase: apply base YAMLs, then start

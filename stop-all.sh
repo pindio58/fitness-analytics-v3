@@ -21,6 +21,7 @@ helm uninstall airflow -n fitness-analytics-namespace || true
 helm uninstall spark-operator -n fitness-analytics-namespace || true
 helm uninstall prometheus -n fitness-analytics-namespace || true
 helm uninstall statsd -n fitness-analytics-namespace || true
+helm uninstall postgres-exporter -n fitness-analytics-namespace || true
 
 echo "Force cleaning stuck pods..."
 kubectl delete pods -n fitness-analytics-namespace  --all --grace-period=0 --force || true

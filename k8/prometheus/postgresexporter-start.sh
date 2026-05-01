@@ -1,0 +1,1 @@
+helm upgrade --install postgres-exporter prometheus-community/prometheus-postgres-exporter -f ./optional/postgres-exporter-values.yml
