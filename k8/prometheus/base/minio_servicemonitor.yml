@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: fitness-analytics-minio-servicemonitor
+  namespace: fitness-analytics-namespace
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: minio
+  endpoints:
+    - port: s3
+      path: /minio/v2/metrics/cluster
+      interval: 10s
