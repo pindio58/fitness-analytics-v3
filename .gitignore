@@ -30,3 +30,4 @@ docs/valuesOfAirflow.yml
 k8/prometheus/airflowvalues.yml
 
 k8/prometheus/backups
+sparkPromTest.sh

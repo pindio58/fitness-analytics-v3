@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fitness-analytics-spark-service
+  namespace: fitness-analytics-namespace
+  labels:
+    spark-role: driver
+spec:
+  selector:
+    spark-role: driver
+    spark-app-name: fitness-analytics-spark-application
+  ports:
+    - name: metrics
+      port: 8090
+      targetPort: 8090

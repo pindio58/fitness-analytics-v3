@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: fitness-analytics-spark-servicemonitor
+  namespace: fitness-analytics-namespace
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      spark-role: driver
+  namespaceSelector:
+    matchNames:
+      - fitness-analytics-namespace
+  endpoints:
+    - port: metrics
+      interval: 15s
