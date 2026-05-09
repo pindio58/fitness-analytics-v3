@@ -8,6 +8,7 @@ set -e
 WORKDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 K8_DIR="$WORKDIR/k8"
 LOG_FILE="$WORKDIR/logsOfDeploy.log"
+LOGDIR="$WORKDIR/logs"
 
 # Redirect all output to log file and console
 exec > >(tee -a "$LOG_FILE") 2>&1
@@ -56,19 +57,22 @@ cd "$WORKDIR"
 
 echo "Starting port-forwarding..."
 # MinIO (default 9001)
-nohup kubectl port-forward svc/fitness-analytics-minio-service 9001:9001 -n fitness-analytics-namespace > "$WORKDIR/minio-port.log" 2>&1 &
+nohup kubectl port-forward svc/fitness-analytics-minio-service 9001:9001 -n fitness-analytics-namespace > "$LOGDIR/minio-port.log" 2>&1 &
 # Postgres (default 5432)
-nohup kubectl port-forward svc/fitness-analytics-postgres-service 5433:5432 -n fitness-analytics-namespace > "$WORKDIR/postgres-port.log" 2>&1 &
+nohup kubectl port-forward svc/fitness-analytics-postgres-service 5433:5432 -n fitness-analytics-namespace > "$LOGDIR/postgres-port.log" 2>&1 &
 # Airflow webserver (default 8080)
-nohup kubectl port-forward svc/airflow-api-server 8080:8080 -n fitness-analytics-namespace > "$WORKDIR/airflow-port.log" 2>&1 &
+nohup kubectl port-forward svc/airflow-api-server 8080:8080 -n fitness-analytics-namespace > "$LOGDIR/airflow-port.log" 2>&1 &
 # Airflow postgres 
-nohup kubectl port-forward svc/airflow-postgresql  5432:5432 -n fitness-analytics-namespace > "$WORKDIR/airflow-port.log" 2>&1 &
+nohup kubectl port-forward svc/airflow-postgresql  5432:5432 -n fitness-analytics-namespace > "$LOGDIR/airflow-port.log" 2>&1 &
 # Metabase webserver (default 3000)
-nohup kubectl port-forward svc/fitness-analytics-metabase-service 3000:3000 -n fitness-analytics-namespace > "$WORKDIR/metabase-port.log" 2>&1 &
+nohup kubectl port-forward svc/fitness-analytics-metabase-service 3000:3000 -n fitness-analytics-namespace > "$LOGDIR/metabase-port.log" 2>&1 &
 # Spark UI (default 4040)
 # nohup kubectl port-forward svc/spark 4040:4040 -n fitness-analytics-namespace > "$WORKDIR/spark-port.log" 2>&1 &
 
 # Prometheus webserver (default 9090)
-nohup kubectl port-forward svc/prometheus-kube-prometheus-prometheus  9090:9090 -n fitness-analytics-namespace > "$WORKDIR/metabase-port.log" 2>&1 &
+nohup kubectl port-forward svc/prometheus-kube-prometheus-prometheus  9090:9090 -n fitness-analytics-namespace > "$LOGDIR/prometheus-port.log" 2>&1 &
+# Prometheus Alert Manager (default 9093)
+nohup kubectl port-forward svc/prometheus-kube-prometheus-alertmanager 9093:9093 -n fitness-analytics-namespace > "$LOGDIR/prometheus-port.log" 2>&1 &
+
 
 echo "Deployment and port-forwarding started."

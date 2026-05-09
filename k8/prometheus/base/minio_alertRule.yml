@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: minio-alert
+  namespace: fitness-analytics-namespace
+  labels:
+    release: prometheus
+spec:
+  groups:
+    - name: minio-alert
+      labels:
+        release: prometheus
+      rules:
+        - alert: MinIODown
+          expr: (up{container="minio"} == 0) or (absent(up{container="minio"}) == 1)
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "MinIO instance is down"
+            description: "MinIO instance has been down for a long time"
