@@ -195,7 +195,21 @@ cp k8/minio/base/minio-secret.template.yml k8/minio/base/minio-secret.yml
 cp k8/spark/base/spark-secret.template.yml k8/spark/base/spark-secret.yml
 ```
 
+#### ENV
+
+```bash
+cp .env.template .env
+```
+
 Replace placeholders with real values
+
+---
+
+### 3. Please open .env and replace with actual values. Then run the following under `strava_module`
+
+```bash
+py bootstrap_auth.py
+```
 
 ---
 
@@ -255,6 +269,15 @@ kubectl port-forward svc/fitness-analytics-metabase-service 3000:3000
 ```
 ---
 
+#### Prometheus(Prmetheus and Alert manager)
+
+```bash
+kubectl port-forward svc/prometheus-kube-prometheus-prometheus  9090:9090
+kubectl port-forward svc/prometheus-kube-prometheus-alertmanager 9093:9093 
+```
+---
+
+
 ### 6. Make Airflow connections
 
 #### a. Postgres connection
@@ -266,10 +289,7 @@ kubectl port-forward svc/fitness-analytics-metabase-service 3000:3000
 #### a. MinIo connection
 * Please follow step 3 at this [link](https://www.notion.so/Integrate-Airflow-and-MinIO-2cde0b22664f80a49942c5c30262d978?v=2cde0b22664f8014b67e000cbb85deb6&source=copy_link)
 
----
 
-### 7. Insert strava token Manually
-* Once you have the strava token, please first manually insert the data in table `config.strava_tokens`
 
 ---
 
@@ -375,7 +395,7 @@ chmod +x stop-all.sh
 ## Future Improvements
 
 
-* Add Prometheus + Grafana monitoring
+* Grafana monitoring
 * CI/CD pipeline
 
 ---
